@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cgfofnfj6tq58"]
+
+[ext_resource type="Script" uid="uid://bbheqo1yiyoy8" path="res://hurt_zone.gd" id="2_7k7bx"]
+[ext_resource type="Texture2D" uid="uid://uonfgroamusi" path="res://assets/sidescroller_spikes1.png" id="2_tggh8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vw27"]
+size = Vector2(125.99999, 126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k7bx"]
+size = Vector2(125, 144)
+
+[node name="Spike" type="StaticBody2D" unique_id=1658063536]
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=697384910]
+texture = ExtResource("2_tggh8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1397866689]
+position = Vector2(-1.9073486e-06, -7.1525574e-07)
+shape = SubResource("RectangleShape2D_5vw27")
+
+[node name="hurtZone" type="Area2D" parent="." unique_id=538069310]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("2_7k7bx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtZone" unique_id=259157872]
+position = Vector2(-0.5, -9)
+shape = SubResource("RectangleShape2D_7k7bx")
+debug_color = Color(0.95548517, 0.18877232, 0.2589516, 0.41960785)
+
+[connection signal="body_entered" from="hurtZone" to="hurtZone" method="_on_body_entered"]

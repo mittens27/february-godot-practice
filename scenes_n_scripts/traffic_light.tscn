@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://qecdsy3s622k"]
+
+[ext_resource type="Texture2D" uid="uid://yhlemufgtmnm" path="res://assets/Sidescroller Shooter - Central City/Assets/Props-01.png" id="1_4ucqr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8e37"]
+atlas = ExtResource("1_4ucqr")
+region = Rect2(32, 192, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8rcp"]
+atlas = ExtResource("1_4ucqr")
+region = Rect2(48, 192, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct4na"]
+atlas = ExtResource("1_4ucqr")
+region = Rect2(64, 192, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k8odf"]
+animations = [{
+"frames": [{
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_b8e37")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_w8rcp")
+}, {
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_ct4na")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="trafficLight" type="AnimatedSprite2D" unique_id=563185283]
+sprite_frames = SubResource("SpriteFrames_k8odf")
+autoplay = "default"
+frame_progress = 0.32621065
+centered = false
+offset = Vector2(-8, -8)
