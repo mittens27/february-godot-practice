@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ch011anl4fbor"
-path="res://.godot/imported/4.png-5d35bda1619af173f5850bb1b8850603.ctex"
+path="res://.godot/imported/4.png-1d466207bf92e4b3ed6f40c542143921.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/city/city 2/4.png"
-dest_files=["res://.godot/imported/4.png-5d35bda1619af173f5850bb1b8850603.ctex"]
+source_file="res://assets/world/city/city 2/4.png"
+dest_files=["res://.godot/imported/4.png-1d466207bf92e4b3ed6f40c542143921.ctex"]
 
 [params]
 

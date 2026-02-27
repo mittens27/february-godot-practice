@@ -22,6 +22,7 @@ func _process(delta):
 	offset.x = lerp(offset.x, target_x, followSpeed * delta)
 
 
+
 func _on_player_player_died():
 	$bgMusic.stop()
 	if fall_death == false:

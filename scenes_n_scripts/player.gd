@@ -4,25 +4,21 @@ enum PlayerState { IDLE, RUN, JUMP, FALL, ATTACK }
 
 var state : PlayerState = PlayerState.IDLE
 
-var coins := 0
-
-@export var maxHealth: int = 3
-signal player_died
-signal health_changed(new_health)
-var health: int:
-	set(value):
-		health = value
-		emit_signal("health_changed", health)
-var invulnerable := false
-
 @onready var sprite := $AnimatedSprite2D
 @onready var attackHitbox := $attackHitbox
+@onready var health_component = $HealthComponent
+
+signal player_died
+
+var invulnerable := false
 
 var maxSpeed := 200.0
 var acceleration := 1200.0
 var friction := 1500.0
 var gravity := 900.0
 var jumpForce := 275.0
+
+var coins := 0
 
 var facing_direction := 1
 
@@ -41,7 +37,7 @@ var attack_lunge_speed := maxSpeed * 0.35
 var attack_jump_multiplier := 0.5
 
 func _ready():
-	health = maxHealth
+	health_component.died.connect(_on_died)
 
 func _physics_process(delta):
 	
@@ -200,28 +196,25 @@ func takeDamage(amount: int, source_position: Vector2):
 	if invulnerable:
 		return
 	
-	health -= amount
-	print("Player health:", health)
+	health_component.damage(amount)
+
 	$SFXManager/hurt.play()
 	
 	# Knockback away from damage source
 	var knockback_dir = (global_position - source_position).normalized()
 	velocity = knockback_dir * 100
 	
-	if health <= 0:
-		die()
-	else:
-		start_iframes()
+	start_iframes()
 
 func start_iframes():
 	invulnerable = true
 	await get_tree().create_timer(0.6).timeout
 	invulnerable = false
 
-func die():
+func _on_died():
 	print("Player died.")
+	player_died.emit()
 	queue_free()
-	emit_signal("player_died")
 	
 func bounce():
 	velocity.y = -250

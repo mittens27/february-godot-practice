@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bl4xalien0lnk"
-path="res://.godot/imported/Buildings.png-7fe2f1f5c986e9ded3c479afe7ed711b.ctex"
+path="res://.godot/imported/Buildings.png-cd0ae2bb30e8e392c7ae4f7f17c270c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sidescroller Shooter - Central City/Assets/Buildings.png"
-dest_files=["res://.godot/imported/Buildings.png-7fe2f1f5c986e9ded3c479afe7ed711b.ctex"]
+source_file="res://assets/world/Sidescroller Shooter - Central City/Assets/Buildings.png"
+dest_files=["res://.godot/imported/Buildings.png-cd0ae2bb30e8e392c7ae4f7f17c270c5.ctex"]
 
 [params]
 

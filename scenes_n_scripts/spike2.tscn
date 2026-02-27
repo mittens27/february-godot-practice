@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ecfqvjipvyjg"]
 
-[ext_resource type="Texture2D" uid="uid://b7w0hmfgr6dew" path="res://assets/sidescroller_spikes2.png" id="1_8xp26"]
-[ext_resource type="Script" uid="uid://bbheqo1yiyoy8" path="res://hurt_zone.gd" id="2_f5e3v"]
+[ext_resource type="Texture2D" uid="uid://b7w0hmfgr6dew" path="res://assets/traps/sidescroller_spikes2.png" id="1_8xp26"]
+[ext_resource type="Script" uid="uid://bbheqo1yiyoy8" path="res://scenes_n_scripts/hurt_zone.gd" id="2_f5e3v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5vw27"]
 size = Vector2(125.99999, 102.89223)

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1t5u5l4hpyki"
-path="res://.godot/imported/Mid Fog.png-89a983e2a4c5ab56aa54c29b7cd92a9a.ctex"
+path="res://.godot/imported/Mid Fog.png-ff0cda762cc807cb56a1039c9d43297c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sidescroller Shooter - Central City/Background/Mid Fog.png"
-dest_files=["res://.godot/imported/Mid Fog.png-89a983e2a4c5ab56aa54c29b7cd92a9a.ctex"]
+source_file="res://assets/world/Sidescroller Shooter - Central City/Background/Mid Fog.png"
+dest_files=["res://.godot/imported/Mid Fog.png-ff0cda762cc807cb56a1039c9d43297c.ctex"]
 
 [params]
 

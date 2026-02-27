@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://20lrwmt50fiu"
-path="res://.godot/imported/headCrab.png-e70d12345cdff6bc0486ca3cd9aedd40.ctex"
+path="res://.godot/imported/headCrab.png-0d95824234f18a7834437f6834cbcda3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/headCrab.png"
-dest_files=["res://.godot/imported/headCrab.png-e70d12345cdff6bc0486ca3cd9aedd40.ctex"]
+source_file="res://assets/enemies/headCrab.png"
+dest_files=["res://.godot/imported/headCrab.png-0d95824234f18a7834437f6834cbcda3.ctex"]
 
 [params]
 

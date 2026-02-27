@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://sbvb0u061igb"
-path="res://.godot/imported/Background Props.png-e5b381af9f1ea3bdf96cbdfd8cfdb6ac.ctex"
+path="res://.godot/imported/Background Props.png-eae7d19f9c0c40ee40d3e522b5996d15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sidescroller Shooter - Central City/Social/Background Props.png"
-dest_files=["res://.godot/imported/Background Props.png-e5b381af9f1ea3bdf96cbdfd8cfdb6ac.ctex"]
+source_file="res://assets/world/Sidescroller Shooter - Central City/Social/Background Props.png"
+dest_files=["res://.godot/imported/Background Props.png-eae7d19f9c0c40ee40d3e522b5996d15.ctex"]
 
 [params]
 

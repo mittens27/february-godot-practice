@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcycf8u2w6nuu"
-path="res://.godot/imported/oneAndyBuck-Sheet.png-ddc3e8f47acf1356dc249ab465e96775.ctex"
+path="res://.godot/imported/oneAndyBuck-Sheet.png-d86592cb54e77cd94850a9737e54e21c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/oneAndyBuck-Sheet.png"
-dest_files=["res://.godot/imported/oneAndyBuck-Sheet.png-ddc3e8f47acf1356dc249ab465e96775.ctex"]
+source_file="res://assets/collectibles/oneAndyBuck-Sheet.png"
+dest_files=["res://.godot/imported/oneAndyBuck-Sheet.png-d86592cb54e77cd94850a9737e54e21c.ctex"]
 
 [params]
 

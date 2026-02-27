@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhf40h57hw361"
-path="res://.godot/imported/sidescrollerTiles.png-56f183f213a281a90107a37257a75bff.ctex"
+path="res://.godot/imported/sidescrollerTiles.png-0f88e7a8781101fb20ad25f9be1993c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sidescrollerTiles.png"
-dest_files=["res://.godot/imported/sidescrollerTiles.png-56f183f213a281a90107a37257a75bff.ctex"]
+source_file="res://assets/world/sidescrollerTiles.png"
+dest_files=["res://.godot/imported/sidescrollerTiles.png-0f88e7a8781101fb20ad25f9be1993c4.ctex"]
 
 [params]
 

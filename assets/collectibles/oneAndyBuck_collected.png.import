@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1g10eltxrmyl"
-path="res://.godot/imported/oneAndyBuck_collected.png-c1848b2f08d19137b374070186c3f9eb.ctex"
+path="res://.godot/imported/oneAndyBuck_collected.png-067d1df2e63aebf90337160b23e1f850.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/oneAndyBuck_collected.png"
-dest_files=["res://.godot/imported/oneAndyBuck_collected.png-c1848b2f08d19137b374070186c3f9eb.ctex"]
+source_file="res://assets/collectibles/oneAndyBuck_collected.png"
+dest_files=["res://.godot/imported/oneAndyBuck_collected.png-067d1df2e63aebf90337160b23e1f850.ctex"]
 
 [params]
 

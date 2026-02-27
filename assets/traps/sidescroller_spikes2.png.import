@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b7w0hmfgr6dew"
-path="res://.godot/imported/sidescroller_spikes2.png-0ebded6fe7ba43645c6ad07a8e25b397.ctex"
+path="res://.godot/imported/sidescroller_spikes2.png-fe92c843df80b224b4f41b50eaa0375b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sidescroller_spikes2.png"
-dest_files=["res://.godot/imported/sidescroller_spikes2.png-0ebded6fe7ba43645c6ad07a8e25b397.ctex"]
+source_file="res://assets/traps/sidescroller_spikes2.png"
+dest_files=["res://.godot/imported/sidescroller_spikes2.png-fe92c843df80b224b4f41b50eaa0375b.ctex"]
 
 [params]
 

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://0am50f455bst"]
 
-[ext_resource type="Script" uid="uid://c3713nhdc5jua" path="res://coin.gd" id="1_0t63x"]
-[ext_resource type="Texture2D" uid="uid://b1g10eltxrmyl" path="res://assets/oneAndyBuck_collected.png" id="2_pdq0q"]
-[ext_resource type="Texture2D" uid="uid://dcycf8u2w6nuu" path="res://assets/oneAndyBuck-Sheet.png" id="2_v7riw"]
+[ext_resource type="Script" uid="uid://c3713nhdc5jua" path="res://scenes_n_scripts/coin.gd" id="1_0t63x"]
+[ext_resource type="Texture2D" uid="uid://b1g10eltxrmyl" path="res://assets/collectibles/oneAndyBuck_collected.png" id="2_pdq0q"]
+[ext_resource type="Texture2D" uid="uid://dcycf8u2w6nuu" path="res://assets/collectibles/oneAndyBuck-Sheet.png" id="2_v7riw"]
 [ext_resource type="AudioStream" uid="uid://285gy5i7xvua" path="res://sounds/coin2.wav" id="4_pdq0q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ciu18"]

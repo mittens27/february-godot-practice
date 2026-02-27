@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c2qq7fakg7got"]
 
-[ext_resource type="Script" uid="uid://6o6ewgob6ars" path="res://alien.gd" id="1_0cgv7"]
-[ext_resource type="Texture2D" uid="uid://fyflhnoda8p" path="res://enemies/HIGHERRESenemyAlien.png" id="1_816kv"]
+[ext_resource type="Script" uid="uid://6o6ewgob6ars" path="res://scenes_n_scripts/alien.gd" id="1_0cgv7"]
+[ext_resource type="Texture2D" uid="uid://fyflhnoda8p" path="res://assets/enemies/HIGHERRESenemyAlien.png" id="1_816kv"]
 [ext_resource type="AudioStream" uid="uid://uubuukhkp28c" path="res://sounds/die1.wav" id="3_g5epv"]
 [ext_resource type="AudioStream" uid="uid://113sqjy3st3q" path="res://sounds/die2.wav" id="4_1tq5k"]
 [ext_resource type="AudioStream" uid="uid://c6s4m7i5333g5" path="res://sounds/die3.wav" id="5_17d3o"]

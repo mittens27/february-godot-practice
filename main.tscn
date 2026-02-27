@@ -1,28 +1,29 @@
 [gd_scene format=4 uid="uid://b445bjlter8ed"]
 
-[ext_resource type="PackedScene" uid="uid://bouf4vrgiu6b4" path="res://player.tscn" id="1_5vw27"]
+[ext_resource type="PackedScene" uid="uid://bouf4vrgiu6b4" path="res://scenes_n_scripts/player.tscn" id="1_5vw27"]
 [ext_resource type="Script" uid="uid://dq40rl6u7vqse" path="res://main.gd" id="1_yaehf"]
-[ext_resource type="Script" uid="uid://vpmnwcnbpi1s" path="res://camera_2d.gd" id="2_ycdy4"]
+[ext_resource type="Script" uid="uid://vpmnwcnbpi1s" path="res://scenes_n_scripts/camera_2d.gd" id="2_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="3_1u8w0"]
 [ext_resource type="AudioStream" uid="uid://bca58bxnhhbpm" path="res://sounds/fall.wav" id="4_2cqfq"]
 [ext_resource type="AudioStream" uid="uid://chtgccuj2wg7d" path="res://sounds/lose.wav" id="5_yaehf"]
-[ext_resource type="Script" uid="uid://7qpnt6cgb73m" path="res://ui.gd" id="6_7mycd"]
-[ext_resource type="Texture2D" uid="uid://yhlemufgtmnm" path="res://assets/Sidescroller Shooter - Central City/Assets/Props-01.png" id="7_82xsv"]
-[ext_resource type="PackedScene" uid="uid://0am50f455bst" path="res://coin.tscn" id="7_272bh"]
+[ext_resource type="Script" uid="uid://7qpnt6cgb73m" path="res://scenes_n_scripts/ui.gd" id="6_7mycd"]
+[ext_resource type="Texture2D" uid="uid://yhlemufgtmnm" path="res://assets/world/Sidescroller Shooter - Central City/Assets/Props-01.png" id="7_82xsv"]
+[ext_resource type="PackedScene" uid="uid://0am50f455bst" path="res://scenes_n_scripts/coin.tscn" id="7_272bh"]
 [ext_resource type="FontFile" uid="uid://b11w0tsuu5ki2" path="res://fonts/PressStart2P.ttf" id="7_efxa6"]
-[ext_resource type="Texture2D" uid="uid://dsy2fxvw7prv4" path="res://healthBar.png" id="8_dg77c"]
-[ext_resource type="Texture2D" uid="uid://ufbrcpkvnf8c" path="res://assets/Sidescroller Shooter - Central City/Assets/Tiles.png" id="8_getpj"]
-[ext_resource type="Texture2D" uid="uid://bl4xalien0lnk" path="res://assets/Sidescroller Shooter - Central City/Assets/Buildings.png" id="9_ryguw"]
-[ext_resource type="PackedScene" uid="uid://c2qq7fakg7got" path="res://alien.tscn" id="10_4c57u"]
-[ext_resource type="PackedScene" uid="uid://qecdsy3s622k" path="res://traffic_light.tscn" id="10_getpj"]
-[ext_resource type="Texture2D" uid="uid://cdvvqjg6dhfl2" path="res://assets/cinema.png" id="11_ryguw"]
-[ext_resource type="Texture2D" uid="uid://bir7fcspwvh6t" path="res://assets/movie_poster_1.png" id="12_d13ii"]
-[ext_resource type="Script" uid="uid://sx5b0q5a7skf" path="res://death.gd" id="12_dg77c"]
+[ext_resource type="Texture2D" uid="uid://dsy2fxvw7prv4" path="res://assets/UI/healthBar.png" id="8_dg77c"]
+[ext_resource type="Texture2D" uid="uid://ufbrcpkvnf8c" path="res://assets/world/Sidescroller Shooter - Central City/Assets/Tiles.png" id="8_getpj"]
+[ext_resource type="Texture2D" uid="uid://bl4xalien0lnk" path="res://assets/world/Sidescroller Shooter - Central City/Assets/Buildings.png" id="9_ryguw"]
+[ext_resource type="PackedScene" uid="uid://c2qq7fakg7got" path="res://scenes_n_scripts/alien.tscn" id="10_4c57u"]
+[ext_resource type="PackedScene" uid="uid://qecdsy3s622k" path="res://scenes_n_scripts/traffic_light.tscn" id="10_getpj"]
+[ext_resource type="Texture2D" uid="uid://cdvvqjg6dhfl2" path="res://assets/signs/cinema.png" id="11_ryguw"]
+[ext_resource type="Texture2D" uid="uid://bir7fcspwvh6t" path="res://assets/signs/movie_poster_1.png" id="12_d13ii"]
+[ext_resource type="Script" uid="uid://sx5b0q5a7skf" path="res://scenes_n_scripts/death.gd" id="12_dg77c"]
 [ext_resource type="AudioStream" uid="uid://dn6byfrbj4non" path="res://sounds/chiptune.wav" id="14_w48qg"]
-[ext_resource type="Texture2D" uid="uid://ddyyxro6b8vc3" path="res://assets/city/city 2/1.png" id="16_getpj"]
-[ext_resource type="Texture2D" uid="uid://c4naqqfnbrdjo" path="res://assets/city/city 2/2.png" id="17_ryguw"]
-[ext_resource type="Texture2D" uid="uid://xgxrkm3t606y" path="res://assets/city/city 2/3.png" id="18_d13ii"]
-[ext_resource type="Texture2D" uid="uid://ch011anl4fbor" path="res://assets/city/city 2/4.png" id="19_1u8w0"]
-[ext_resource type="Texture2D" uid="uid://blwcb3lpakjq0" path="res://assets/city/city 2/5.png" id="20_0odxb"]
+[ext_resource type="Texture2D" uid="uid://ddyyxro6b8vc3" path="res://assets/world/city/city 2/1.png" id="16_getpj"]
+[ext_resource type="Texture2D" uid="uid://c4naqqfnbrdjo" path="res://assets/world/city/city 2/2.png" id="17_ryguw"]
+[ext_resource type="Texture2D" uid="uid://xgxrkm3t606y" path="res://assets/world/city/city 2/3.png" id="18_d13ii"]
+[ext_resource type="Texture2D" uid="uid://ch011anl4fbor" path="res://assets/world/city/city 2/4.png" id="19_1u8w0"]
+[ext_resource type="Texture2D" uid="uid://blwcb3lpakjq0" path="res://assets/world/city/city 2/5.png" id="20_0odxb"]
 
 [sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_074og"]
 loop = false
@@ -928,7 +929,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ycdy4")
 }],
-"loop": true,
+"loop": false,
 "name": &"0_hearts",
 "speed": 5.0
 }, {
@@ -936,7 +937,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w48qg")
 }],
-"loop": true,
+"loop": false,
 "name": &"1_heart",
 "speed": 5.0
 }, {
@@ -944,7 +945,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vivmo")
 }],
-"loop": true,
+"loop": false,
 "name": &"2_hearts",
 "speed": 5.0
 }, {
@@ -952,7 +953,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yaehf")
 }],
-"loop": true,
+"loop": false,
 "name": &"3_hearts",
 "speed": 5.0
 }]
@@ -968,6 +969,8 @@ script = ExtResource("1_yaehf")
 
 [node name="Player" parent="." unique_id=522721304 instance=ExtResource("1_5vw27")]
 position = Vector2(72, 388.345)
+
+[node name="HealthComponent" parent="Player" unique_id=1856036654 instance=ExtResource("3_1u8w0")]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1653412290]
 position = Vector2(72, 388.345)
@@ -1021,7 +1024,6 @@ tile_map_data = PackedByteArray("AAAOABYAAQAWAAkAAAAOABcAAQAWAAoAAAAOABgAAQAWAAs
 tile_set = SubResource("TileSet_0cp0l")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=51940378 node_paths=PackedStringArray("player")]
-visible = false
 script = ExtResource("6_7mycd")
 player = NodePath("../Player")
 
@@ -1191,7 +1193,6 @@ collision_mask = 7
 position = Vector2(-281, 314.5)
 shape = SubResource("RectangleShape2D_getpj")
 
-[connection signal="health_changed" from="Player" to="UI" method="_on_player_health_changed"]
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="Camera2D" method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="UI" method="_on_player_player_died"]
