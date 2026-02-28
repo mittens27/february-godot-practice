@@ -4,11 +4,9 @@ enum EnemyState { RUN, DIE }
 
 var state : EnemyState = EnemyState.RUN
 
-@export var enemy_maxHealth: int = 2
-var enemy_health: int
 var invulnerable := false
 
-@export var speed := 40.0
+@export var speed := 80.0
 @export var gravity := 900.0
 
 var direction := 1 #start moving right
@@ -19,11 +17,12 @@ var turn_timer := 0.0
 
 @onready var ground_check := $RayCast2D
 @onready var sprite := $AnimatedSprite2D
+@onready var health_component = $HealthComponent
 
 @export var damage := 1
 
 func _ready():
-	enemy_health = enemy_maxHealth
+	health_component.died.connect(_on_died)
 
 func _physics_process(delta):
 	
@@ -48,8 +47,6 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
-	#update_animation()
-	
 	match state:
 		EnemyState.RUN:
 			if not invulnerable:
@@ -69,12 +66,6 @@ func turn():
 		direction *= -1
 		ground_check.position.x *= -1
 		turn_timer = turn_cooldown
-	
-#func update_animation():
-	#if not is_on_floor():
-		#sprite.play("fall")
-	#else:
-		#sprite.play("run")
 
 func _on_hurtbox_body_entered(body):
 	if body.is_in_group("player"):
@@ -87,8 +78,7 @@ func takeDamage(amount: int, source_position: Vector2):
 	if invulnerable:
 		return
 		
-	enemy_maxHealth -= amount
-	print("Enemy health:", enemy_health)
+	health_component.damage(amount)
 	
 	# Knockback away from damage source
 	if not invulnerable:
@@ -97,10 +87,7 @@ func takeDamage(amount: int, source_position: Vector2):
 	else:
 		move_toward(velocity.x, 0, friction)
 	
-	if enemy_maxHealth <= 0:
-		_on_died()
-	else:
-		start_iframes()
+	start_iframes()
 		
 func start_iframes():
 	invulnerable = true
@@ -109,10 +96,6 @@ func start_iframes():
 	
 func _on_died():
 	state = EnemyState.DIE
-	sprite.play("die")
 	$SFXManager/die.play()
-	print("Enemy killed")
-
-#func _on_animated_sprite_2d_animation_finished():
-	#if sprite.animation == "die":
-		#queue_free()
+	print("Headcrab killed")
+	queue_free()

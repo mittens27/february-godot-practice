@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://bouf4vrgiu6b4" path="res://scenes_n_scripts/player.tscn" id="1_5vw27"]
 [ext_resource type="Script" uid="uid://dq40rl6u7vqse" path="res://main.gd" id="1_yaehf"]
 [ext_resource type="Script" uid="uid://vpmnwcnbpi1s" path="res://scenes_n_scripts/camera_2d.gd" id="2_ycdy4"]
-[ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="3_1u8w0"]
 [ext_resource type="AudioStream" uid="uid://bca58bxnhhbpm" path="res://sounds/fall.wav" id="4_2cqfq"]
 [ext_resource type="AudioStream" uid="uid://chtgccuj2wg7d" path="res://sounds/lose.wav" id="5_yaehf"]
 [ext_resource type="Script" uid="uid://7qpnt6cgb73m" path="res://scenes_n_scripts/ui.gd" id="6_7mycd"]
@@ -24,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://xgxrkm3t606y" path="res://assets/world/city/city 2/3.png" id="18_d13ii"]
 [ext_resource type="Texture2D" uid="uid://ch011anl4fbor" path="res://assets/world/city/city 2/4.png" id="19_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://blwcb3lpakjq0" path="res://assets/world/city/city 2/5.png" id="20_0odxb"]
+[ext_resource type="PackedScene" uid="uid://dpnrqrknu03b3" path="res://scenes_n_scripts/headcrab.tscn" id="25_0odxb"]
 
 [sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_074og"]
 loop = false
@@ -970,8 +970,6 @@ script = ExtResource("1_yaehf")
 [node name="Player" parent="." unique_id=522721304 instance=ExtResource("1_5vw27")]
 position = Vector2(72, 388.345)
 
-[node name="HealthComponent" parent="Player" unique_id=1856036654 instance=ExtResource("3_1u8w0")]
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1653412290]
 position = Vector2(72, 388.345)
 zoom = Vector2(4, 4)
@@ -1192,6 +1190,9 @@ collision_mask = 7
 [node name="leftBoundary" type="CollisionShape2D" parent="levelBoundaries" unique_id=160526336]
 position = Vector2(-281, 314.5)
 shape = SubResource("RectangleShape2D_getpj")
+
+[node name="headcrab" parent="." unique_id=1394006155 instance=ExtResource("25_0odxb")]
+position = Vector2(-118, 166)
 
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="Camera2D" method="_on_player_player_died"]

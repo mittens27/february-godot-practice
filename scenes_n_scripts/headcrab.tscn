@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://dpnrqrknu03b3"]
+
+[ext_resource type="Script" uid="uid://274fccgmfw27" path="res://headcrab.gd" id="1_rvta3"]
+[ext_resource type="Texture2D" uid="uid://20lrwmt50fiu" path="res://assets/enemies/headCrab.png" id="2_2fok8"]
+[ext_resource type="AudioStream" uid="uid://uubuukhkp28c" path="res://sounds/die1.wav" id="3_v8pnt"]
+[ext_resource type="AudioStream" uid="uid://113sqjy3st3q" path="res://sounds/die2.wav" id="4_raq2m"]
+[ext_resource type="AudioStream" uid="uid://c6s4m7i5333g5" path="res://sounds/die3.wav" id="5_cj55b"]
+[ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="6_raq2m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvta3"]
+atlas = ExtResource("2_2fok8")
+region = Rect2(688, 0, 43, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fok8"]
+atlas = ExtResource("2_2fok8")
+region = Rect2(731, 0, 43, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ko3e"]
+atlas = ExtResource("2_2fok8")
+region = Rect2(774, 0, 43, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8pnt"]
+atlas = ExtResource("2_2fok8")
+region = Rect2(817, 0, 43, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eswum"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvta3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fok8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ko3e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8pnt")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ga4nu"]
+radius = 3.0
+height = 13.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ch6iu"]
+radius = 5.3640804
+height = 11.537321
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eswum"]
+streams_count = 3
+stream_0/stream = ExtResource("3_v8pnt")
+stream_1/stream = ExtResource("4_raq2m")
+stream_2/stream = ExtResource("5_cj55b")
+
+[node name="headcrab" type="CharacterBody2D" unique_id=1394006155 groups=["enemies"]]
+scale = Vector2(2, 2)
+collision_layer = 4
+collision_mask = 19
+script = ExtResource("1_rvta3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2077148764]
+sprite_frames = SubResource("SpriteFrames_eswum")
+animation = &"run"
+frame_progress = 0.16699187
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=360015604]
+position = Vector2(1.5164146, 3.441125)
+shape = SubResource("CapsuleShape2D_ga4nu")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=808641432]
+position = Vector2(1.715, 0)
+target_position = Vector2(7.6936607, 14.867857)
+
+[node name="hurtbox" type="Area2D" parent="." unique_id=413582755]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=1528348601 groups=["enemies"]]
+position = Vector2(1.4946651, 3.9625793)
+shape = SubResource("CapsuleShape2D_ch6iu")
+debug_color = Color(0.95, 0.171, 0.171, 0.41960785)
+
+[node name="SFXManager" type="Node2D" parent="." unique_id=1670743243]
+
+[node name="die" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=1426819223]
+stream = SubResource("AudioStreamRandomizer_eswum")
+
+[node name="HealthComponent" parent="." unique_id=1856036654 instance=ExtResource("6_raq2m")]
+max_health = 2
+
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

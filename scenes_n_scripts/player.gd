@@ -223,7 +223,7 @@ func bounce():
 func _on_stompbox_body_entered(body):
 	if body.is_in_group("enemies"):
 		bounce()
-		body.die()
+		body._on_died()
 
 func _on_attack_hitbox_body_entered(body):
 	if body.is_in_group("enemies"):

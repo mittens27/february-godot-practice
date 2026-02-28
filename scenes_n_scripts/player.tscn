@@ -7,7 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://bh1fb4rxii0jd" path="res://sounds/grunt.wav" id="6_ivps1"]
 [ext_resource type="AudioStream" uid="uid://dyu5verch7jh2" path="res://sounds/slam.mp3" id="7_urp6f"]
 [ext_resource type="AudioStream" uid="uid://bllbf3kvflyvw" path="res://sounds/slam2.wav" id="8_bwjto"]
+[ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="9_5f1cp"]
 [ext_resource type="AudioStream" uid="uid://cltgd6n6l7if8" path="res://sounds/jump.wav" id="9_606se"]
+[ext_resource type="PackedScene" uid="uid://dq86ykcr7ek46" path="res://scenes_n_scripts/components/hurtbox.tscn" id="10_wqm4w"]
+[ext_resource type="PackedScene" uid="uid://dhcx2fnnb3wrn" path="res://scenes_n_scripts/components/hitbox.tscn" id="11_w81pq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
 atlas = ExtResource("2_hqtel")
@@ -195,6 +198,10 @@ streams_count = 2
 stream_0/stream = ExtResource("7_urp6f")
 stream_1/stream = ExtResource("8_bwjto")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lp15m"]
+radius = 1.5091667
+height = 11.22471
+
 [node name="Player" type="CharacterBody2D" unique_id=522721304 groups=["player"]]
 top_level = true
 scale = Vector2(2, 2)
@@ -209,6 +216,7 @@ sprite_frames = SubResource("SpriteFrames_w48qg")
 animation = &"attack_three"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=953010452]
+visible = false
 position = Vector2(0, 2.2)
 scale = Vector2(1, 1.1)
 shape = SubResource("CapsuleShape2D_h2yge")
@@ -222,10 +230,12 @@ position = Vector2(0.08219528, 12.206715)
 shape = SubResource("RectangleShape2D_i3pqv")
 
 [node name="attackHitbox" type="Area2D" parent="." unique_id=917384555]
+visible = false
 collision_layer = 16
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attackHitbox" unique_id=618182297]
+visible = false
 position = Vector2(9.123516, 1.4499073)
 shape = SubResource("CapsuleShape2D_sweqy")
 debug_color = Color(0.82352924, 0.045396112, 0.2764893, 0.41960785)
@@ -234,16 +244,41 @@ debug_color = Color(0.82352924, 0.045396112, 0.2764893, 0.41960785)
 
 [node name="punch" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=2032867744]
 stream = SubResource("AudioStreamRandomizer_u1c27")
+volume_db = -8.0
 
 [node name="hurt" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=708641375]
 stream = SubResource("AudioStreamRandomizer_op7ga")
+volume_db = -8.0
 
 [node name="slam" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=701684089]
 stream = SubResource("AudioStreamRandomizer_q13i1")
+volume_db = -12.0
 
 [node name="jump" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=1712799234]
 stream = ExtResource("9_606se")
+volume_db = -12.0
+
+[node name="HealthComponent" parent="." unique_id=1856036654 instance=ExtResource("9_5f1cp")]
+
+[node name="Hurtbox" parent="." unique_id=114773078 node_paths=PackedStringArray("health_component") instance=ExtResource("10_wqm4w")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0" unique_id=654168018]
+position = Vector2(1.0609436, 1.1726198)
+debug_color = Color(0.58333343, 0, 0.7, 0.41960785)
+
+[node name="Attack" type="Node2D" parent="." unique_id=1435967009]
+
+[node name="Hitbox" parent="Attack" unique_id=1262883298 instance=ExtResource("11_w81pq")]
+
+[node name="CollisionShape2D" parent="Attack/Hitbox" index="0" unique_id=1769747512]
+position = Vector2(9.101765, 1.284297)
+shape = SubResource("CapsuleShape2D_lp15m")
+debug_color = Color(0.7, 0, 0, 0.41960785)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Stompbox" to="." method="_on_stompbox_body_entered"]
 [connection signal="body_entered" from="attackHitbox" to="." method="_on_attack_hitbox_body_entered"]
+
+[editable path="Hurtbox"]
+[editable path="Attack/Hitbox"]
