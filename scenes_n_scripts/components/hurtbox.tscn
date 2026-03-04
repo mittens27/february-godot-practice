@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://dceum8p121qs5" path="res://scenes_n_scripts/components/hurtbox.gd" id="1_k823m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k823m"]
-radius = 3.407692
-height = 17.031973
+radius = 4.4958916
+height = 14.088449
 
 [node name="Hurtbox" type="Area2D" unique_id=114773078]
+collision_layer = 32
+collision_mask = 16
 script = ExtResource("1_k823m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=654168018]
 shape = SubResource("CapsuleShape2D_k823m")
+debug_color = Color(0.63000005, 0, 0.7, 0.41960785)

@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://d0rukloqnj27m" path="res://scenes_n_scripts/components/hitbox.gd" id="1_jj3pg"]
 
 [node name="Hitbox" type="Area2D" unique_id=1262883298]
+collision_layer = 8
+collision_mask = 16
 script = ExtResource("1_jj3pg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1769747512]
+debug_color = Color(0.7, 0, 0, 0.41960785)

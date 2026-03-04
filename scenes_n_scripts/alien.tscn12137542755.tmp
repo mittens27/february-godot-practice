@@ -164,10 +164,8 @@ max_health = 2
 [node name="die" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=755562281]
 stream = SubResource("AudioStreamRandomizer_v6wi2")
 
-[node name="Hurtbox" parent="." unique_id=114773078 node_paths=PackedStringArray("health_component", "hitbox") instance=ExtResource("8_bv2vq")]
-collision_mask = 4
+[node name="Hurtbox" parent="." unique_id=114773078 node_paths=PackedStringArray("health_component") instance=ExtResource("8_bv2vq")]
 health_component = NodePath("../HealthComponent")
-hitbox = NodePath("../Attack/Hitbox")
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0" unique_id=654168018]
 position = Vector2(-0.5, 1.5)

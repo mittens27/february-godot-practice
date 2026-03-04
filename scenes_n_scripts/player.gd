@@ -5,12 +5,12 @@ enum PlayerState { IDLE, RUN, JUMP, FALL, ATTACK }
 var state : PlayerState = PlayerState.IDLE
 
 @onready var sprite := $AnimatedSprite2D
-@onready var attackHitbox := $attackHitbox
 @onready var health_component = $HealthComponent
+@onready var attack_hitbox := $Attack/Hitbox
+@onready var attack := $Attack
+@onready var hurtbox := $Hurtbox
 
 signal player_died
-
-var invulnerable := false
 
 var maxSpeed := 200.0
 var acceleration := 1200.0
@@ -33,14 +33,17 @@ var combo_queued := false
 const MAX_COMBO := 3
 
 var attack_impulse_applied := false
-var attack_lunge_speed := maxSpeed * 0.35
+var attack_lunge_speed := maxSpeed * 0.65
 var attack_jump_multiplier := 0.5
 
 func _ready():
 	health_component.died.connect(_on_died)
+	attack_hitbox.hit.connect(_on_attack_hit)
+	hurtbox.hit_received.connect(_on_hit_received)
+	sprite.frame_changed.connect(_on_frame_changed)
+	attack_hitbox.monitorable = false
 
 func _physics_process(delta):
-	
 	if velocity.x > 0:
 		facing_direction = 1
 	elif velocity.x < 0:
@@ -66,16 +69,15 @@ func _physics_process(delta):
 		PlayerState.ATTACK:
 			state_attack(delta)
 
-	if velocity.x != 0 and not invulnerable:
+	if velocity.x != 0:
 		sprite.flip_h = velocity.x < 0
-		attackHitbox.scale.x = -1 if sprite.flip_h else 1
+		attack.scale.x = -1 if sprite.flip_h else 1
 
 	apply_gravity(delta)
 	move_and_slide()
 
 func state_idle(delta):
 	apply_horizontal_movement(delta)
-	disable_attack_hitbox()
 	sprite.play("idle")
 	
 	if not is_on_floor() and velocity.y < 0:
@@ -112,8 +114,6 @@ func state_fall(delta):
 		state = PlayerState.IDLE
 		
 func state_attack(delta):
-	enable_attack_hitbox()
-
 	# Apply forward impulse once at attack start
 	if is_on_floor():
 		if not attack_impulse_applied:
@@ -121,9 +121,9 @@ func state_attack(delta):
 			velocity.x = dir * attack_lunge_speed
 			attack_impulse_applied = true
 		velocity.x = move_toward(velocity.x, 0, 300 * delta)
-	
+
 func apply_horizontal_movement(delta):
-		# Horizontal Input
+	# Horizontal Input
 	var inputDir := Input.get_axis("ui_left", "ui_right")
 
 	# Apply horizontal movement with acceleration
@@ -161,55 +161,23 @@ func update_jump_helpers(delta):
 		$SFXManager/jump.play()
 	else:
 		jump_buffer_timer -= delta
-
-func enable_attack_hitbox():
-	$attackHitbox.monitoring = true
-
-func disable_attack_hitbox():
-	$attackHitbox.monitoring = false
-	
-func start_attack():
-	state = PlayerState.ATTACK
-	attack_impulse_applied = false
-	combo_step += 1
-	combo_step = clamp(combo_step, 1, MAX_COMBO)
-	
-	match combo_step:
-		1: sprite.play("attack_one")
-		2: sprite.play("attack_two")
-		3: sprite.play("attack_three")
 		
-func end_combo():
-	combo_step = 0
-	combo_queued = false
-	state = PlayerState.IDLE
-	
 func add_coin():
 	coins += 1
-	#get_tree().call_group("UI", "updateCoins", coins)
 	print("coins now:", coins)
 	var ui_nodes = get_tree().get_nodes_in_group("UI")
 	for ui in ui_nodes:
 		if ui.has_method("update_coins"):
 			ui.update_coins(coins)
-func takeDamage(amount: int, source_position: Vector2):
-	if invulnerable:
-		return
-	
-	health_component.damage(amount)
 
+func _on_hit_received(source_position: Vector2):
 	$SFXManager/hurt.play()
-	
+	apply_knockback(source_position)
+
+func apply_knockback(source_position: Vector2):
 	# Knockback away from damage source
 	var knockback_dir = (global_position - source_position).normalized()
-	velocity = knockback_dir * 100
-	
-	start_iframes()
-
-func start_iframes():
-	invulnerable = true
-	await get_tree().create_timer(0.6).timeout
-	invulnerable = false
+	velocity = knockback_dir * 300
 
 func _on_died():
 	print("Player died.")
@@ -225,12 +193,6 @@ func _on_stompbox_body_entered(body):
 		bounce()
 		body._on_died()
 
-func _on_attack_hitbox_body_entered(body):
-	if body.is_in_group("enemies"):
-		if body.has_method("takeDamage"):
-				body.takeDamage(1, global_position)
-		$SFXManager/punch.play()
-
 func _on_animated_sprite_2d_animation_finished():
 	if state == PlayerState.ATTACK:
 		if combo_queued and combo_step < MAX_COMBO:
@@ -238,3 +200,40 @@ func _on_animated_sprite_2d_animation_finished():
 			start_attack()
 		else:
 			end_combo()
+			
+func start_attack():
+	state = PlayerState.ATTACK
+	attack_impulse_applied = false
+	combo_step += 1
+	combo_step = clamp(combo_step, 1, MAX_COMBO)
+	
+	match combo_step:
+		1: sprite.play("attack_one")
+		2: sprite.play("attack_two")
+		3: sprite.play("attack_three")
+		
+func end_combo():
+	combo_step = 0
+	combo_queued = false
+	attack_hitbox.monitorable = false
+	state = PlayerState.IDLE
+	
+func _on_frame_changed():
+	#defaults to OFF first
+	if state != PlayerState.ATTACK:
+		attack_hitbox.monitorable = false
+		return
+	
+	match sprite.animation:
+		"attack_one":
+			if sprite.frame >= 0 and sprite.frame <= 1:
+				attack_hitbox.monitorable = true
+		"attack_two":
+			if sprite.frame >= 0 and sprite.frame <= 1:
+				attack_hitbox.monitorable = true
+		"attack_three":
+			if sprite.frame >= 0 and sprite.frame <= 1:
+				attack_hitbox.monitorable = true
+				
+func _on_attack_hit(area):
+	$SFXManager/punch.play()
