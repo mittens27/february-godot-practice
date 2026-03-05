@@ -10,6 +10,8 @@ var state : PlayerState = PlayerState.IDLE
 @onready var attack := $Attack
 @onready var hurtbox := $Hurtbox
 
+@export var player_data: PlayerData
+
 signal player_died
 
 var maxSpeed := 200.0
@@ -37,6 +39,8 @@ var attack_lunge_speed := maxSpeed * 0.65
 var attack_jump_multiplier := 0.5
 
 func _ready():
+	apply_player_data()
+	
 	health_component.died.connect(_on_died)
 	attack_hitbox.hit.connect(_on_attack_hit)
 	hurtbox.hit_received.connect(_on_hit_received)
@@ -237,3 +241,6 @@ func _on_frame_changed():
 				
 func _on_attack_hit(area):
 	$SFXManager/punch.play()
+	
+func apply_player_data():
+		health_component.initialize(player_data.max_health)

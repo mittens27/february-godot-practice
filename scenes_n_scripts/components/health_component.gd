@@ -6,9 +6,6 @@ signal died
 @export var max_health: int = 3
 var current_health: int
 
-func _ready():
-	current_health = max_health
-
 func damage(amount: int):
 	current_health = clamp(current_health - amount, 0, max_health)
 
@@ -20,3 +17,7 @@ func damage(amount: int):
 func heal(amount: int):
 	current_health = clamp(current_health + amount, 0, max_health)
 	health_changed.emit(current_health)
+
+func initialize(max_hp: int):
+	max_health = max_hp
+	current_health = max_hp

@@ -1,21 +1,18 @@
 extends CharacterBody2D
 
 enum EnemyState { RUN, DIE }
-
 var state : EnemyState = EnemyState.RUN
 
 @onready var ground_check := $RayCast2D
 @onready var sprite := $AnimatedSprite2D
 @onready var health_component := $HealthComponent
 @onready var hurtbox := $Hurtbox
-@onready var hitbox := $Attack/Hitbox
+@onready var attack_hitbox := $Attack/Hitbox
 
-@export var enemy_maxHealth: int = 2
-var enemy_health: int
+@export var enemy_data: EnemyData
 
-@export var speed := 40.0
-@export var gravity := 900.0
-@export var damage := 1
+var gravity: float
+var speed: float
 
 var direction := 1 #start moving right
 var friction := 10000.0
@@ -27,10 +24,13 @@ var hitstun_time := 0.2
 var hitstun_timer := 0.0
 
 func _ready():
+	apply_enemy_data()
+	
 	health_component.died.connect(_on_died)
 	hurtbox.hit_received.connect(_on_hit_received)
-	hurtbox.monitoring = true
-	hitbox.monitoring = true
+	
+	hurtbox.monitorable = true
+	attack_hitbox.monitorable = true
 
 func _physics_process(delta):
 	if hitstun_timer > 0:
@@ -62,11 +62,15 @@ func _physics_process(delta):
 	
 	match state:
 		EnemyState.RUN:
-				velocity.x = direction * speed
-				sprite.play("run")
+			velocity.x = direction * speed
+			sprite.play("run")
 		EnemyState.DIE:
+			hurtbox.monitorable = false
+			attack_hitbox.monitorable = false
 			velocity.x = 0
 			remove_from_group("enemies")
+			collision_layer = 1 << 9
+			collision_mask = 1 << 0
 			
 func turn():
 		direction *= -1
@@ -82,9 +86,13 @@ func apply_knockback(source_position: Vector2):
 	hitstun_timer = hitstun_time
 	
 func _on_died():
-	hurtbox.monitoring = false
-	hitbox.monitoring = false
 	state = EnemyState.DIE
 	sprite.play("die")
 	$SFXManager/die.play()
 	print("Enemy killed")
+
+func apply_enemy_data():
+	health_component.initialize(enemy_data.max_health)
+	speed = enemy_data.speed
+	gravity = enemy_data.gravity
+	attack_hitbox.damage = enemy_data.damage

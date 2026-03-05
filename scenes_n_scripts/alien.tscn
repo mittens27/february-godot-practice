@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://6o6ewgob6ars" path="res://scenes_n_scripts/alien.gd" id="1_0cgv7"]
 [ext_resource type="Texture2D" uid="uid://fyflhnoda8p" path="res://assets/enemies/HIGHERRESenemyAlien.png" id="1_816kv"]
+[ext_resource type="Resource" uid="uid://cqirt053c181l" path="res://scenes_n_scripts/Resources/AlienData.tres" id="2_bv2vq"]
 [ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="3_1dfrf"]
 [ext_resource type="AudioStream" uid="uid://uubuukhkp28c" path="res://sounds/die1.wav" id="3_g5epv"]
 [ext_resource type="AudioStream" uid="uid://113sqjy3st3q" path="res://sounds/die2.wav" id="4_1tq5k"]
@@ -141,15 +142,15 @@ radius = 5.0990195
 [node name="alien" type="CharacterBody2D" unique_id=1484875105 groups=["enemies"]]
 scale = Vector2(2, 2)
 collision_layer = 256
-collision_mask = 3
+collision_mask = 4099
 script = ExtResource("1_0cgv7")
+enemy_data = ExtResource("2_bv2vq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2136322446]
 sprite_frames = SubResource("SpriteFrames_4j6lr")
 animation = &"run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237880830]
-visible = false
 position = Vector2(-0.6460762, 3.8035736)
 shape = SubResource("CapsuleShape2D_0cgv7")
 

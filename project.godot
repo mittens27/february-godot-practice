@@ -70,6 +70,8 @@ attack={
 2d_physics/layer_6="Enemy Hurtbox"
 2d_physics/layer_7="treasure"
 2d_physics/layer_9="Enemy"
+2d_physics/layer_10="Corpse"
+2d_physics/layer_13="stompbox"
 
 [physics]
 

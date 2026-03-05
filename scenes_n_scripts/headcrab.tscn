@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://274fccgmfw27" path="res://headcrab.gd" id="1_rvta3"]
 [ext_resource type="Texture2D" uid="uid://20lrwmt50fiu" path="res://assets/enemies/headCrab.png" id="2_2fok8"]
+[ext_resource type="Resource" uid="uid://dpkllhybixhbx" path="res://scenes_n_scripts/Resources/HeadcrabData.tres" id="2_ga4nu"]
 [ext_resource type="AudioStream" uid="uid://uubuukhkp28c" path="res://sounds/die1.wav" id="3_v8pnt"]
 [ext_resource type="AudioStream" uid="uid://113sqjy3st3q" path="res://sounds/die2.wav" id="4_raq2m"]
 [ext_resource type="AudioStream" uid="uid://c6s4m7i5333g5" path="res://sounds/die3.wav" id="5_cj55b"]
@@ -61,8 +62,9 @@ radius = 4.957946
 [node name="headcrab" type="CharacterBody2D" unique_id=1394006155 groups=["enemies"]]
 scale = Vector2(2, 2)
 collision_layer = 256
-collision_mask = 3
+collision_mask = 4099
 script = ExtResource("1_rvta3")
+enemy_data = ExtResource("2_ga4nu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2077148764]
 sprite_frames = SubResource("SpriteFrames_eswum")

@@ -10,8 +10,10 @@ var state : EnemyState = EnemyState.RUN
 @onready var attack_hitbox := $Attack/Hitbox
 @onready var hurtbox := $Hurtbox
 
-@export var speed := 80.0
-@export var gravity := 900.0
+@export var enemy_data: EnemyData
+
+var gravity: float
+var speed: float
 
 var direction := 1 #start moving right
 var friction := 10000.0
@@ -23,6 +25,8 @@ var hitstun_time := 0.2
 var hitstun_timer := 0.0
 
 func _ready():
+	apply_enemy_data()
+	
 	health_component.died.connect(_on_died)
 	hurtbox.hit_received.connect(_on_hit_received)
 	
@@ -61,11 +65,6 @@ func _physics_process(delta):
 		EnemyState.DIE:
 			velocity.x = 0
 			remove_from_group("enemies")
-			collision_layer &= ~(1 << (3 - 1))
-			collision_mask &= ~(
-				(1 << (2 - 1)) |
-				(1 << (5 - 1))
-			)
 			
 func turn():
 		direction *= -1
@@ -86,3 +85,9 @@ func _on_died():
 	$SFXManager/die.play()
 	print("Headcrab killed")
 	queue_free()
+	
+func apply_enemy_data():
+	health_component.initialize(enemy_data.max_health)
+	speed = enemy_data.speed
+	gravity = enemy_data.gravity
+	attack_hitbox.damage = enemy_data.damage
