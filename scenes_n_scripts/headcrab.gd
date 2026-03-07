@@ -82,7 +82,6 @@ func apply_knockback(force, source_position: Vector2):
 	
 func _on_died():
 	state = EnemyState.DIE
-	$SFXManager/die.play()
 	print("Headcrab killed")
 	queue_free()
 	

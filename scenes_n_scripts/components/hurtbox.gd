@@ -17,7 +17,8 @@ func _on_area_entered(area):
 	
 	hit_received.emit(area.attack_data, area.global_position)
 	
-	start_invulnerability()
+	if get_parent().is_in_group("player"):
+		start_invulnerability()
 	
 func start_invulnerability():
 	invulnerable = true

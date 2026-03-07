@@ -47,7 +47,6 @@ func _ready():
 	apply_player_data()
 	
 	health_component.died.connect(_on_died)
-	attack_hitbox.hit.connect(_on_attack_hit)
 	hurtbox.hit_received.connect(_on_hit_received)
 	sprite.frame_changed.connect(_on_frame_changed)
 	attack_hitbox.monitoring = true
@@ -176,7 +175,7 @@ func update_jump_helpers(delta):
 	# Track buffered jump input
 	if Input.is_action_just_pressed("ui_accept"):
 		jump_buffer_timer = jump_buffer_time
-		$SFXManager/jump.play()
+		#$SFXManager/jump.play()
 	else:
 		jump_buffer_timer -= delta
 		
@@ -189,7 +188,7 @@ func add_coin():
 			ui.update_coins(coins)
 
 func _on_hit_received(attack_data, source_position: Vector2):
-	$SFXManager/hurt.play()
+	#$SFXManager/hurt.play()
 	health_component.damage(attack_data.damage)
 	apply_knockback(attack_data.knockback, source_position)
 	flicker()
@@ -264,9 +263,5 @@ func _on_frame_changed():
 			if sprite.frame >= 0 and sprite.frame <= 1:
 				attack_hitbox.monitorable = true
 				
-func _on_attack_hit(area, attack_data):
-	print("Player punched Alien")
-	$SFXManager/punch.play()
-	
 func apply_player_data():
 		health_component.initialize(player_data.max_health)

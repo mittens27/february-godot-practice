@@ -5,3 +5,4 @@ class_name AttackData
 @export var knockback: float = 200
 @export var hitstun: float = 0.15
 @export var attack_range: float = 16
+@export var hit_sound : String = "punch"

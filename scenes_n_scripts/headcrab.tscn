@@ -1,11 +1,8 @@
 [gd_scene format=3 uid="uid://dpnrqrknu03b3"]
 
-[ext_resource type="Script" uid="uid://274fccgmfw27" path="res://headcrab.gd" id="1_rvta3"]
+[ext_resource type="Script" uid="uid://274fccgmfw27" path="res://scenes_n_scripts/headcrab.gd" id="1_rvta3"]
 [ext_resource type="Texture2D" uid="uid://20lrwmt50fiu" path="res://assets/enemies/headCrab.png" id="2_2fok8"]
 [ext_resource type="Resource" uid="uid://dpkllhybixhbx" path="res://scenes_n_scripts/Resources/HeadcrabData.tres" id="2_ga4nu"]
-[ext_resource type="AudioStream" uid="uid://uubuukhkp28c" path="res://sounds/die1.wav" id="3_v8pnt"]
-[ext_resource type="AudioStream" uid="uid://113sqjy3st3q" path="res://sounds/die2.wav" id="4_raq2m"]
-[ext_resource type="AudioStream" uid="uid://c6s4m7i5333g5" path="res://sounds/die3.wav" id="5_cj55b"]
 [ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="6_raq2m"]
 [ext_resource type="PackedScene" uid="uid://dq86ykcr7ek46" path="res://scenes_n_scripts/components/hurtbox.tscn" id="7_eswum"]
 [ext_resource type="PackedScene" uid="uid://dhcx2fnnb3wrn" path="res://scenes_n_scripts/components/hitbox.tscn" id="8_ga4nu"]
@@ -51,12 +48,6 @@ animations = [{
 radius = 3.0
 height = 13.0
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eswum"]
-streams_count = 3
-stream_0/stream = ExtResource("3_v8pnt")
-stream_1/stream = ExtResource("4_raq2m")
-stream_2/stream = ExtResource("5_cj55b")
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ch6iu"]
 radius = 6.9993057
 height = 13.998611
@@ -85,13 +76,7 @@ shape = SubResource("CapsuleShape2D_ga4nu")
 position = Vector2(1.715, 0)
 target_position = Vector2(7.6936607, 14.867857)
 
-[node name="SFXManager" type="Node2D" parent="." unique_id=1670743243]
-
-[node name="die" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=1426819223]
-stream = SubResource("AudioStreamRandomizer_eswum")
-
 [node name="HealthComponent" parent="." unique_id=1856036654 instance=ExtResource("6_raq2m")]
-max_health = 2
 
 [node name="Hurtbox" parent="." unique_id=114773078 instance=ExtResource("7_eswum")]
 collision_mask = 4

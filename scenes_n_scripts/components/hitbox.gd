@@ -15,5 +15,10 @@ func _ready():
 	area_entered.connect(_on_area_entered)
 	
 func _on_area_entered(area):
-		print("Hitbox detected:", area)
 		hit.emit(area, attack_data)
+		
+		Events.attack_landed.emit(
+			get_parent(),
+			area.get_parent(),
+			attack_data
+		)

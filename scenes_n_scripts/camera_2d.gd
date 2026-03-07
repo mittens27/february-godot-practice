@@ -15,13 +15,10 @@ func _process(delta):
 	if player == null:
 		return
 	
-
 	var dir = player.facing_direction
 	var target_x: float = dir * lookAhead
 	global_position = lerp(global_position, player.global_position, followSpeed * delta)
 	offset.x = lerp(offset.x, target_x, followSpeed * delta)
-
-
 
 func _on_player_player_died():
 	$bgMusic.stop()

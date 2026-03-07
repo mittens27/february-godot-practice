@@ -90,7 +90,6 @@ func apply_knockback(force, source_position: Vector2):
 func _on_died():
 	state = EnemyState.DIE
 	sprite.play("die")
-	$SFXManager/die.play()
 	print("Enemy killed")
 
 func apply_enemy_data():

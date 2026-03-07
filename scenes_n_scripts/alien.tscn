@@ -4,9 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://fyflhnoda8p" path="res://assets/enemies/HIGHERRESenemyAlien.png" id="1_816kv"]
 [ext_resource type="Resource" uid="uid://cqirt053c181l" path="res://scenes_n_scripts/Resources/AlienData.tres" id="2_bv2vq"]
 [ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="3_1dfrf"]
-[ext_resource type="AudioStream" uid="uid://uubuukhkp28c" path="res://sounds/die1.wav" id="3_g5epv"]
-[ext_resource type="AudioStream" uid="uid://113sqjy3st3q" path="res://sounds/die2.wav" id="4_1tq5k"]
-[ext_resource type="AudioStream" uid="uid://c6s4m7i5333g5" path="res://sounds/die3.wav" id="5_17d3o"]
 [ext_resource type="PackedScene" uid="uid://dhcx2fnnb3wrn" path="res://scenes_n_scripts/components/hitbox.tscn" id="7_jxn2n"]
 [ext_resource type="PackedScene" uid="uid://dq86ykcr7ek46" path="res://scenes_n_scripts/components/hurtbox.tscn" id="8_bv2vq"]
 [ext_resource type="Resource" uid="uid://3hhgebnb7yce" path="res://scenes_n_scripts/Resources/EnemyTouchAttackData.tres" id="10_8s713"]
@@ -131,12 +128,6 @@ animations = [{
 radius = 4.022602
 height = 18.0
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v6wi2"]
-streams_count = 3
-stream_0/stream = ExtResource("3_g5epv")
-stream_1/stream = ExtResource("4_1tq5k")
-stream_2/stream = ExtResource("5_17d3o")
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8s713"]
 radius = 5.5
 height = 19.0
@@ -163,11 +154,6 @@ shape = SubResource("CapsuleShape2D_0cgv7")
 target_position = Vector2(8.662029, 18.342653)
 
 [node name="HealthComponent" parent="." unique_id=1856036654 instance=ExtResource("3_1dfrf")]
-
-[node name="SFXManager" type="Node2D" parent="." unique_id=1791643517]
-
-[node name="die" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=755562281]
-stream = SubResource("AudioStreamRandomizer_v6wi2")
 
 [node name="Hurtbox" parent="." unique_id=114773078 instance=ExtResource("8_bv2vq")]
 collision_mask = 4
