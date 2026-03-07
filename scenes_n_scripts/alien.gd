@@ -77,13 +77,15 @@ func turn():
 		ground_check.position.x *= -1
 		turn_timer = turn_cooldown
 
-func _on_hit_received(source_position: Vector2):
-	apply_knockback(source_position)
+func _on_hit_received(attack_data, source_position: Vector2):
+	health_component.damage(attack_data.damage)
+	print("Alien health:", health_component.current_health)
+	apply_knockback(attack_data.knockback, source_position)
+	hitstun_timer = attack_data.hitstun
 
-func apply_knockback(source_position: Vector2):
+func apply_knockback(force, source_position: Vector2):
 	var knockback_dir = (global_position - source_position).normalized()
-	velocity = knockback_dir * 400
-	hitstun_timer = hitstun_time
+	velocity = knockback_dir * force
 	
 func _on_died():
 	state = EnemyState.DIE

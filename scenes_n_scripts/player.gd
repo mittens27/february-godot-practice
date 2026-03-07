@@ -20,6 +20,11 @@ var friction := 1500.0
 var gravity := 900.0
 var jumpForce := 275.0
 
+var invulnerability_time := 0.5
+var is_invulnerable = false
+var flicker_speed = 0.1
+var flicker_time = 0.0
+
 var coins := 0
 
 var facing_direction := 1
@@ -45,9 +50,18 @@ func _ready():
 	attack_hitbox.hit.connect(_on_attack_hit)
 	hurtbox.hit_received.connect(_on_hit_received)
 	sprite.frame_changed.connect(_on_frame_changed)
+	attack_hitbox.monitoring = true
 	attack_hitbox.monitorable = false
 
 func _physics_process(delta):
+	# Makes sprite opacity flicker when hurt
+	if is_invulnerable:
+		flicker_time += delta
+		if flicker_time >= flicker_speed:
+			flicker_time = 0.0
+			var current_alpha = sprite.modulate.a
+			sprite.modulate.a = 0.1 if current_alpha == 1.0 else 1.0
+	
 	if velocity.x > 0:
 		facing_direction = 1
 	elif velocity.x < 0:
@@ -174,14 +188,24 @@ func add_coin():
 		if ui.has_method("update_coins"):
 			ui.update_coins(coins)
 
-func _on_hit_received(source_position: Vector2):
+func _on_hit_received(attack_data, source_position: Vector2):
 	$SFXManager/hurt.play()
-	apply_knockback(source_position)
+	health_component.damage(attack_data.damage)
+	apply_knockback(attack_data.knockback, source_position)
+	flicker()
 
-func apply_knockback(source_position: Vector2):
+func apply_knockback(force, source_position: Vector2):
 	# Knockback away from damage source
 	var knockback_dir = (global_position - source_position).normalized()
-	velocity = knockback_dir * 300
+	velocity = knockback_dir * force
+
+func flicker():
+	if is_invulnerable:
+		return
+	is_invulnerable = true
+	await get_tree().create_timer(invulnerability_time).timeout
+	is_invulnerable = false
+	sprite.modulate.a = 1.0
 
 func _on_died():
 	print("Player died.")
@@ -224,8 +248,9 @@ func end_combo():
 	
 func _on_frame_changed():
 	#defaults to OFF first
+	attack_hitbox.monitorable = false
+	
 	if state != PlayerState.ATTACK:
-		attack_hitbox.monitorable = false
 		return
 	
 	match sprite.animation:
@@ -239,7 +264,8 @@ func _on_frame_changed():
 			if sprite.frame >= 0 and sprite.frame <= 1:
 				attack_hitbox.monitorable = true
 				
-func _on_attack_hit(area):
+func _on_attack_hit(area, attack_data):
+	print("Player punched Alien")
 	$SFXManager/punch.play()
 	
 func apply_player_data():

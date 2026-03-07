@@ -1,15 +1,17 @@
 [gd_scene format=3 uid="uid://do3gpmy152yew"]
 
 [ext_resource type="Texture2D" uid="uid://8ha4ok130kls" path="res://assets/traps/sidescroller_spikes3.png" id="1_sb48p"]
-[ext_resource type="Script" uid="uid://bbheqo1yiyoy8" path="res://scenes_n_scripts/hurt_zone.gd" id="2_acv4r"]
+[ext_resource type="PackedScene" uid="uid://dhcx2fnnb3wrn" path="res://scenes_n_scripts/components/hitbox.tscn" id="2_nto5e"]
+[ext_resource type="Resource" uid="uid://wrxbada2ujag" path="res://scenes_n_scripts/Resources/spike_trap.tres" id="3_n2n41"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5vw27"]
 size = Vector2(125.99999, 126)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k7bx"]
-size = Vector2(125, 144)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0tpwy"]
+size = Vector2(117, 148)
 
 [node name="Spike" type="StaticBody2D" unique_id=1658063536]
+scale = Vector2(0.126, 0.126)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=697384910]
 texture = ExtResource("1_sb48p")
@@ -18,14 +20,13 @@ texture = ExtResource("1_sb48p")
 position = Vector2(-1.9073486e-06, -7.1525574e-07)
 shape = SubResource("RectangleShape2D_5vw27")
 
-[node name="hurtZone" type="Area2D" parent="." unique_id=538069310]
-collision_layer = 8
-collision_mask = 2
-script = ExtResource("2_acv4r")
+[node name="Attack" type="Node2D" parent="." unique_id=1917739226]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtZone" unique_id=259157872]
-position = Vector2(-0.5, -9)
-shape = SubResource("RectangleShape2D_7k7bx")
-debug_color = Color(0.95548517, 0.18877232, 0.2589516, 0.41960785)
+[node name="Hitbox" parent="Attack" unique_id=1262883298 instance=ExtResource("2_nto5e")]
+attack_data = ExtResource("3_n2n41")
 
-[connection signal="body_entered" from="hurtZone" to="hurtZone" method="_on_body_entered"]
+[node name="CollisionShape2D" parent="Attack/Hitbox" index="0" unique_id=1769747512]
+position = Vector2(1.5, -11)
+shape = SubResource("RectangleShape2D_0tpwy")
+
+[editable path="Attack/Hitbox"]

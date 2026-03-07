@@ -3,7 +3,7 @@ extends Node
 signal health_changed(current, max)
 signal died
 
-@export var max_health: int = 3
+var max_health: int
 var current_health: int
 
 func damage(amount: int):

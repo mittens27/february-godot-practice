@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://c6s4m7i5333g5" path="res://sounds/die3.wav" id="5_17d3o"]
 [ext_resource type="PackedScene" uid="uid://dhcx2fnnb3wrn" path="res://scenes_n_scripts/components/hitbox.tscn" id="7_jxn2n"]
 [ext_resource type="PackedScene" uid="uid://dq86ykcr7ek46" path="res://scenes_n_scripts/components/hurtbox.tscn" id="8_bv2vq"]
+[ext_resource type="Resource" uid="uid://3hhgebnb7yce" path="res://scenes_n_scripts/Resources/EnemyTouchAttackData.tres" id="10_8s713"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0cgv7"]
 atlas = ExtResource("1_816kv")
@@ -128,13 +129,17 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0cgv7"]
 radius = 4.022602
-height = 12.488871
+height = 18.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v6wi2"]
 streams_count = 3
 stream_0/stream = ExtResource("3_g5epv")
 stream_1/stream = ExtResource("4_1tq5k")
 stream_2/stream = ExtResource("5_17d3o")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8s713"]
+radius = 5.5
+height = 19.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8s713"]
 radius = 5.0990195
@@ -151,33 +156,33 @@ sprite_frames = SubResource("SpriteFrames_4j6lr")
 animation = &"run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237880830]
-position = Vector2(-0.6460762, 3.8035736)
+position = Vector2(-0.6460762, 1)
 shape = SubResource("CapsuleShape2D_0cgv7")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1436776027]
 target_position = Vector2(8.662029, 18.342653)
 
 [node name="HealthComponent" parent="." unique_id=1856036654 instance=ExtResource("3_1dfrf")]
-max_health = 2
 
 [node name="SFXManager" type="Node2D" parent="." unique_id=1791643517]
 
 [node name="die" type="AudioStreamPlayer2D" parent="SFXManager" unique_id=755562281]
 stream = SubResource("AudioStreamRandomizer_v6wi2")
 
-[node name="Hurtbox" parent="." unique_id=114773078 node_paths=PackedStringArray("health_component", "hitbox") instance=ExtResource("8_bv2vq")]
+[node name="Hurtbox" parent="." unique_id=114773078 instance=ExtResource("8_bv2vq")]
 collision_mask = 4
-health_component = NodePath("../HealthComponent")
-hitbox = NodePath("../Attack/Hitbox")
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0" unique_id=654168018]
-position = Vector2(-0.5, 1.5)
+position = Vector2(-0.5, 0.5)
+shape = SubResource("CapsuleShape2D_8s713")
 
 [node name="Attack" type="Node2D" parent="." unique_id=145537765]
 
 [node name="Hitbox" parent="Attack" unique_id=1262883298 groups=["enemies"] instance=ExtResource("7_jxn2n")]
+attack_data = ExtResource("10_8s713")
 
 [node name="CollisionShape2D" parent="Attack/Hitbox" index="0" unique_id=1769747512]
+visible = false
 position = Vector2(-1, 2.5)
 shape = SubResource("CircleShape2D_8s713")
 

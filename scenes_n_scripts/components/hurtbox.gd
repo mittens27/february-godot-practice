@@ -1,12 +1,8 @@
 extends Area2D
 
-signal hurt(damage, source)
-signal hit_received(source_position)
+signal hit_received(attack_data, source_position)
 
-@export var health_component: Node
 @export var invulnerability_time := 0.5
-@export var hitbox := Node
-
 var invulnerable := false
 
 func _ready():
@@ -15,20 +11,17 @@ func _ready():
 func _on_area_entered(area):
 	if invulnerable:
 		return
+		
+	if not "attack_data" in area:
+		return
 	
-	if area.has_method("get_damage"):
-		var damage = area.get_damage()
-		hurt.emit(damage, area)
+	hit_received.emit(area.attack_data, area.global_position)
 	
-		if health_component:
-			health_component.damage(damage)
-			start_invulnerability()
-	
-		hit_received.emit(area.global_position)
+	start_invulnerability()
 	
 func start_invulnerability():
 	invulnerable = true
-	hitbox.monitorable = false
+	monitorable = false
 	await get_tree().create_timer(invulnerability_time).timeout
 	invulnerable = false
-	hitbox.monitorable = true
+	monitorable = true
