@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dpnrqrknu03b3"]
 
-[ext_resource type="Script" uid="uid://274fccgmfw27" path="res://scenes_n_scripts/headcrab.gd" id="1_rvta3"]
+[ext_resource type="Script" uid="uid://274fccgmfw27" path="res://scenes_n_scripts/entities/headcrab.gd" id="1_rvta3"]
 [ext_resource type="Texture2D" uid="uid://20lrwmt50fiu" path="res://assets/enemies/headCrab.png" id="2_2fok8"]
 [ext_resource type="Resource" uid="uid://dpkllhybixhbx" path="res://scenes_n_scripts/Resources/HeadcrabData.tres" id="2_ga4nu"]
 [ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="6_raq2m"]

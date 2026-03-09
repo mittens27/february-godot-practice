@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://0am50f455bst"]
 
-[ext_resource type="Script" uid="uid://c3713nhdc5jua" path="res://scenes_n_scripts/coin.gd" id="1_0t63x"]
+[ext_resource type="Script" uid="uid://c3713nhdc5jua" path="res://scenes_n_scripts/entities/coin.gd" id="1_0t63x"]
 [ext_resource type="Texture2D" uid="uid://b1g10eltxrmyl" path="res://assets/collectibles/oneAndyBuck_collected.png" id="2_pdq0q"]
 [ext_resource type="Texture2D" uid="uid://dcycf8u2w6nuu" path="res://assets/collectibles/oneAndyBuck-Sheet.png" id="2_v7riw"]
-[ext_resource type="AudioStream" uid="uid://285gy5i7xvua" path="res://sounds/coin2.wav" id="4_pdq0q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ciu18"]
 atlas = ExtResource("2_pdq0q")
@@ -126,9 +125,6 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1672722081]
 position = Vector2(-0.5007553, -0.4579277)
 shape = SubResource("CircleShape2D_ybu58")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=486268465]
-stream = ExtResource("4_pdq0q")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

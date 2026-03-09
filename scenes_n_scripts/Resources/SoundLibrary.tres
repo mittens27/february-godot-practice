@@ -1,0 +1,102 @@
+[gd_resource type="Resource" script_class="SoundLibrary" format=3 uid="uid://c1id4po1wmsf6"]
+
+[ext_resource type="Script" uid="uid://o4tnrp6tlc54" path="res://scenes_n_scripts/Resources/sound_library.gd" id="1_rh15h"]
+[ext_resource type="Script" uid="uid://duvq2t7t0bya5" path="res://SoundData.gd" id="2_yux0m"]
+[ext_resource type="AudioStream" uid="uid://cltgd6n6l7if8" path="res://sounds/jump.wav" id="3_yux0m"]
+[ext_resource type="AudioStream" uid="uid://rm0r436y18d2" path="res://sounds/punch1.wav" id="4_068qv"]
+[ext_resource type="AudioStream" uid="uid://kwgxk3rdcp6x" path="res://sounds/punch2.wav" id="5_t2ggx"]
+[ext_resource type="AudioStream" uid="uid://dyu5verch7jh2" path="res://sounds/slam.mp3" id="6_51yof"]
+[ext_resource type="AudioStream" uid="uid://bllbf3kvflyvw" path="res://sounds/slam2.wav" id="7_5m4jv"]
+[ext_resource type="AudioStream" uid="uid://uubuukhkp28c" path="res://sounds/die1.wav" id="8_jul41"]
+[ext_resource type="AudioStream" uid="uid://113sqjy3st3q" path="res://sounds/die2.wav" id="9_2fjmk"]
+[ext_resource type="AudioStream" uid="uid://c6s4m7i5333g5" path="res://sounds/die3.wav" id="10_ys1er"]
+[ext_resource type="AudioStream" uid="uid://bh1fb4rxii0jd" path="res://sounds/hurt1.wav" id="11_g4pto"]
+[ext_resource type="AudioStream" uid="uid://dyhibuhdcv4um" path="res://sounds/hurt2.wav" id="12_pca62"]
+[ext_resource type="AudioStream" uid="uid://285gy5i7xvua" path="res://sounds/coin2.wav" id="13_t0ubg"]
+[ext_resource type="AudioStream" uid="uid://chtgccuj2wg7d" path="res://sounds/lose.wav" id="14_bxj55"]
+[ext_resource type="AudioStream" uid="uid://bca58bxnhhbpm" path="res://sounds/fall.wav" id="15_i5loh"]
+
+[sub_resource type="Resource" id="Resource_g6bed"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("3_yux0m")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_7s0kg"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("4_068qv")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_qhjpp"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("5_t2ggx")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_n5qj5"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("6_51yof")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_20e7w"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("7_5m4jv")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_5u580"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("8_jul41")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_cus60"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("9_2fjmk")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_3elol"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("10_ys1er")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_x2tiu"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("11_g4pto")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_uxbvd"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("12_pca62")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_8r7rk"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("13_t0ubg")
+volume_db = 8.0
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_f7o6l"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("14_bxj55")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[sub_resource type="Resource" id="Resource_afl7w"]
+script = ExtResource("2_yux0m")
+stream = ExtResource("15_i5loh")
+metadata/_custom_type_script = "uid://duvq2t7t0bya5"
+
+[resource]
+script = ExtResource("1_rh15h")
+sounds = Dictionary[String, ExtResource("2_yux0m")]({
+"coin": SubResource("Resource_8r7rk"),
+"die1": SubResource("Resource_5u580"),
+"die2": SubResource("Resource_cus60"),
+"die3": SubResource("Resource_3elol"),
+"fall": SubResource("Resource_afl7w"),
+"hurt1": SubResource("Resource_x2tiu"),
+"hurt2": SubResource("Resource_uxbvd"),
+"jump": SubResource("Resource_g6bed"),
+"player_die": SubResource("Resource_f7o6l"),
+"punch1": SubResource("Resource_7s0kg"),
+"punch2": SubResource("Resource_qhjpp"),
+"slam1": SubResource("Resource_n5qj5"),
+"slam2": SubResource("Resource_20e7w")
+})
+metadata/_custom_type_script = "uid://o4tnrp6tlc54"

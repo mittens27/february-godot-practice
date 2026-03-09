@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2qq7fakg7got"]
 
-[ext_resource type="Script" uid="uid://6o6ewgob6ars" path="res://scenes_n_scripts/alien.gd" id="1_0cgv7"]
+[ext_resource type="Script" uid="uid://6o6ewgob6ars" path="res://scenes_n_scripts/entities/alien.gd" id="1_0cgv7"]
 [ext_resource type="Texture2D" uid="uid://fyflhnoda8p" path="res://assets/enemies/HIGHERRESenemyAlien.png" id="1_816kv"]
 [ext_resource type="Resource" uid="uid://cqirt053c181l" path="res://scenes_n_scripts/Resources/AlienData.tres" id="2_bv2vq"]
 [ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="3_1dfrf"]

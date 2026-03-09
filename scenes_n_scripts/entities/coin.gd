@@ -1,7 +1,6 @@
 extends Area2D
 
 @onready var sprite = $AnimatedSprite2D
-@onready var audio = $AudioStreamPlayer2D
 
 var collected_flag := false
 
@@ -13,7 +12,7 @@ func _on_body_entered(body):
 		if body.has_method("add_coin"):
 			body.add_coin()
 		sprite.play("collect")
-		audio.play()
+		Events.coin_collected.emit(body)
 
 func _on_animated_sprite_2d_animation_finished():
 	if sprite.animation == "collect":

@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://d0bl65rwgn4b5"]
 
 [ext_resource type="Script" uid="uid://b6e3c7iheprm2" path="res://sounds/audio_manager.gd" id="1_xdsxf"]
-[ext_resource type="Resource" uid="uid://dmp2aissveqy3" path="res://scenes_n_scripts/Resources/main_sound_library.tres" id="2_jmdko"]
+[ext_resource type="Resource" uid="uid://c1id4po1wmsf6" path="res://scenes_n_scripts/Resources/SoundLibrary.tres" id="2_jmdko"]
+[ext_resource type="AudioStream" uid="uid://dn6byfrbj4non" path="res://sounds/chiptune.wav" id="3_6aj3w"]
 
 [node name="AudioManager" type="Node" unique_id=1393352577]
 script = ExtResource("1_xdsxf")
 sound_library = ExtResource("2_jmdko")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1061938028]
+stream = ExtResource("3_6aj3w")
+autoplay = true
 bus = &"Music"
 
 [node name="UISoundPlayer" type="AudioStreamPlayer" parent="." unique_id=1101638427]

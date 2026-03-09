@@ -46,10 +46,11 @@ var attack_jump_multiplier := 0.5
 func _ready():
 	apply_player_data()
 	
+	#Events.player_fell.connect(_on_player_fell)
 	health_component.died.connect(_on_died)
 	hurtbox.hit_received.connect(_on_hit_received)
 	sprite.frame_changed.connect(_on_frame_changed)
-	attack_hitbox.monitoring = true
+	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 
 func _physics_process(delta):
@@ -175,7 +176,7 @@ func update_jump_helpers(delta):
 	# Track buffered jump input
 	if Input.is_action_just_pressed("ui_accept"):
 		jump_buffer_timer = jump_buffer_time
-		#$SFXManager/jump.play()
+		Events.player_jumped.emit(self)
 	else:
 		jump_buffer_timer -= delta
 		
@@ -210,10 +211,10 @@ func _on_died():
 	print("Player died.")
 	player_died.emit()
 	queue_free()
-	
+
 func bounce():
 	velocity.y = -250
-	$SFXManager/slam.play()
+	Events.player_slammed.emit(self)
 
 func _on_stompbox_body_entered(body):
 	if body.is_in_group("enemies"):
@@ -243,11 +244,13 @@ func end_combo():
 	combo_step = 0
 	combo_queued = false
 	attack_hitbox.monitorable = false
+	attack_hitbox.monitoring = false
 	state = PlayerState.IDLE
 	
 func _on_frame_changed():
 	#defaults to OFF first
 	attack_hitbox.monitorable = false
+	attack_hitbox.monitoring = false
 	
 	if state != PlayerState.ATTACK:
 		return
@@ -255,12 +258,15 @@ func _on_frame_changed():
 	match sprite.animation:
 		"attack_one":
 			if sprite.frame >= 0 and sprite.frame <= 1:
+				attack_hitbox.monitoring = true
 				attack_hitbox.monitorable = true
 		"attack_two":
 			if sprite.frame >= 0 and sprite.frame <= 1:
+				attack_hitbox.monitoring = true
 				attack_hitbox.monitorable = true
 		"attack_three":
 			if sprite.frame >= 0 and sprite.frame <= 1:
+				attack_hitbox.monitoring = true
 				attack_hitbox.monitorable = true
 				
 func apply_player_data():

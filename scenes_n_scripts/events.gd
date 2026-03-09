@@ -7,6 +7,10 @@ signal entity_died(entity)
 
 #player
 signal player_jumped(player)
+signal player_slammed(player)
+signal player_hurt(player)
+signal player_fell(player)
 
-#items
+#items/ui
 signal coin_collected(player)
+signal game_reset()
