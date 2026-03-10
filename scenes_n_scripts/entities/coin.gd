@@ -9,8 +9,6 @@ func _on_body_entered(body):
 		return
 	if body.is_in_group("player"):
 		collected_flag = true
-		if body.has_method("add_coin"):
-			body.add_coin()
 		sprite.play("collect")
 		Events.coin_collected.emit(body)
 

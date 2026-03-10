@@ -86,7 +86,7 @@ func _on_died():
 	queue_free()
 	
 func apply_enemy_data():
-	health_component.initialize(enemy_data.max_health)
+	health_component.initialize(enemy_data.max_health, enemy_data.max_health)
 	speed = enemy_data.speed
 	gravity = enemy_data.gravity
 	attack_hitbox.damage = enemy_data.damage

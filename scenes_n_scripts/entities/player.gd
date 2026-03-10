@@ -12,8 +12,6 @@ var state : PlayerState = PlayerState.IDLE
 
 @export var player_data: PlayerData
 
-signal player_died
-
 var maxSpeed := 200.0
 var acceleration := 1200.0
 var friction := 1500.0
@@ -24,8 +22,6 @@ var invulnerability_time := 0.5
 var is_invulnerable = false
 var flicker_speed = 0.1
 var flicker_time = 0.0
-
-var coins := 0
 
 var facing_direction := 1
 
@@ -48,8 +44,11 @@ func _ready():
 	
 	#Events.player_fell.connect(_on_player_fell)
 	health_component.died.connect(_on_died)
+	health_component.health_changed.connect(_on_health_component_health_changed)
 	hurtbox.hit_received.connect(_on_hit_received)
 	sprite.frame_changed.connect(_on_frame_changed)
+	Events.coin_collected.connect(_on_coin_collected)
+	
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 
@@ -180,13 +179,10 @@ func update_jump_helpers(delta):
 	else:
 		jump_buffer_timer -= delta
 		
-func add_coin():
-	coins += 1
-	print("coins now:", coins)
-	var ui_nodes = get_tree().get_nodes_in_group("UI")
-	for ui in ui_nodes:
-		if ui.has_method("update_coins"):
-			ui.update_coins(coins)
+func _on_coin_collected(player):
+	GameMan.coins += 1
+	print("Coins:", GameMan.coins)
+	Events.coin_amount_changed.emit(GameMan.coins)
 
 func _on_hit_received(attack_data, source_position: Vector2):
 	#$SFXManager/hurt.play()
@@ -209,7 +205,9 @@ func flicker():
 
 func _on_died():
 	print("Player died.")
-	player_died.emit()
+	GameMan.coins = 0
+	GameMan.player_health = 0
+	Events.player_died.emit()
 	queue_free()
 
 func bounce():
@@ -270,4 +268,14 @@ func _on_frame_changed():
 				attack_hitbox.monitorable = true
 				
 func apply_player_data():
-		health_component.initialize(player_data.max_health)
+	if GameMan.player_health <= 0:
+		GameMan.player_health = player_data.max_health
+		
+	health_component.initialize(
+		player_data.max_health,
+		GameMan.player_health
+		)
+
+func _on_health_component_health_changed(current_health):
+	GameMan.player_health = current_health
+	Events.player_health_changed.emit(current_health)

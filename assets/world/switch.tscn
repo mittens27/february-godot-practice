@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cfmywvy68dvqa"]
+
+[ext_resource type="Script" uid="uid://ddck8gpfswdc7" path="res://assets/world/switch.gd" id="1_8307x"]
+[ext_resource type="Texture2D" uid="uid://bl4xalien0lnk" path="res://assets/world/Sidescroller Shooter - Central City/Assets/Buildings.png" id="1_it01i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sswid"]
+size = Vector2(65, 99)
+
+[node name="switch" type="Node2D" unique_id=1191072773]
+script = ExtResource("1_8307x")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=401897381]
+texture = ExtResource("1_it01i")
+region_enabled = true
+region_rect = Rect2(160, 96, 16, 16)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1358654880]
+collision_layer = 1024
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2042137745]
+visible = false
+position = Vector2(-16.5, -6.5)
+shape = SubResource("RectangleShape2D_sswid")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

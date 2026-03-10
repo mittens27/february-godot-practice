@@ -3,16 +3,14 @@ extends CanvasLayer
 enum hpState { THREE, TWO, ONE, ZERO }
 var state : hpState = hpState.THREE
 
-@export var player: Node
-
 @onready var sprite := $healthBar
 
 func _ready():
-	add_to_group("UI")
-	if player != null:
-		var health_component = player.get_node("HealthComponent")
-		health_component.health_changed.connect(_on_player_health_changed)
-		_on_player_health_changed(health_component.current_health)
+	Events.player_health_changed.connect(_on_player_health_changed)
+	_on_player_health_changed(GameMan.player_health)
+	Events.coin_amount_changed.connect(_on_coin_amount_changed)
+	_on_coin_amount_changed(GameMan.coins)
+	Events.player_died.connect(_on_player_player_died)
 	
 	var deathNote := $deathNote
 	deathNote.visible = false
@@ -29,7 +27,7 @@ func _physics_process(_delta):
 		hpState.ZERO:
 			sprite.play("0_hearts")
 	
-func update_coins(amount):
+func _on_coin_amount_changed(amount):
 	$coinLabel.text = "Coins: %d" % amount
 	
 func _on_player_health_changed(current_health):
