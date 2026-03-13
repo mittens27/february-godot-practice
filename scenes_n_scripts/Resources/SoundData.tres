@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SoundData" format=3 uid="uid://ssdybwvbfgxk"]
 
-[ext_resource type="Script" uid="uid://duvq2t7t0bya5" path="res://SoundData.gd" id="1_0a4lc"]
+[ext_resource type="Script" uid="uid://duvq2t7t0bya5" path="res://scenes_n_scripts/Resources/SoundData.gd" id="1_0a4lc"]
 
 [sub_resource type="AudioStream" id="AudioStream_0a4lc"]
 

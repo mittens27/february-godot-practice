@@ -5,7 +5,7 @@ extends TileMapLayer
 func _ready():
 	Events.wall_switch_activated.connect(_on_switch_activated)
 	
-func _on_switch_activated():
+func _on_switch_activated(switch):
 	fade_out()
 	disable_collision()
 	print("Button signal received!")

@@ -12,8 +12,11 @@ extends CharacterBody2D
 var maxSpeed := 200.0
 var acceleration := 1200.0
 var friction := 1500.0
-var gravity := 900.0
-var jumpForce := 300.0
+
+var gravity := 500.0
+var jumpForce := 200.0
+var fall_gravity_multiplier := 1.6
+var jump_cut_gravity_multiplier := 2.5
 
 var invulnerability_time := 0.5
 var is_invulnerable = false
@@ -67,10 +70,8 @@ func _physics_process(delta):
 	elif velocity.x < 0:
 		facing_direction = -1
 	
-	update_jump_helpers(delta)
-	
 	if Input.is_action_just_pressed("attack"):
-		if state_machine.current_state.name != "AttackState":
+		if not state_machine.current_state is AttackState:
 			start_attack()
 		else:
 			combo_queued = true
@@ -81,54 +82,7 @@ func _physics_process(delta):
 		sprite.flip_h = velocity.x < 0
 		attack.scale.x = -1 if sprite.flip_h else 1
 
-	apply_gravity(delta)
 	move_and_slide()
-
-#func state_idle(delta):
-	#apply_horizontal_movement(delta)
-	#sprite.play("idle")
-	#
-	#if not is_on_floor() and velocity.y < 0:
-		#state = PlayerState.JUMP
-	#elif not is_on_floor() and velocity.y > 0:
-		#state = PlayerState.FALL
-	#elif abs(velocity.x) > 10:
-		#state = PlayerState.RUN
-	
-#func state_run(delta):
-	#apply_horizontal_movement(delta)
-	#apply_gravity(delta)
-	#sprite.play("run")
-	#
-	#if not is_on_floor() and velocity.y < 0:
-		#state = PlayerState.JUMP
-	#elif not is_on_floor() and velocity.y > 0:
-		#state = PlayerState.FALL
-	#elif abs(velocity.x) <= 10:
-		#state = PlayerState.IDLE
-	
-#func state_jump(delta):
-	#apply_horizontal_movement(delta)
-	#sprite.play("jump")
-	#
-	#if velocity.y > 0:
-		#state = PlayerState.FALL
-	
-#func state_fall(delta):
-	#apply_horizontal_movement(delta)
-	#sprite.play("fall")
-	#
-	#if is_on_floor():
-		#state = PlayerState.IDLE
-		
-#func state_attack(delta):
-	## Apply forward impulse once at attack start
-	#if is_on_floor():
-		#if not attack_impulse_applied:
-			#var dir = -1 if sprite.flip_h else 1
-			#velocity.x = dir * attack_lunge_speed
-			#attack_impulse_applied = true
-		#velocity.x = move_toward(velocity.x, 0, 300 * delta)
 
 func apply_horizontal_movement(delta):
 	# Horizontal Input
@@ -141,16 +95,32 @@ func apply_horizontal_movement(delta):
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 		
 func apply_gravity(delta):
-	# Apply gravity every physics frame
+	
+	var g := gravity
+	
+	#faster falling gravity
+	if velocity.y > 0:
+		g *= fall_gravity_multiplier
+		
+	#short hop when releasing jump early
+	if velocity.y < 0 and not Input.is_action_pressed("ui_accept"):
+		g *= jump_cut_gravity_multiplier
+	
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		velocity.y += g * delta
 
-func update_jump_helpers(delta):
-	# Jump only if not standing on something
-	if  jump_buffer_timer > 0 and coyote_timer > 0 and not has_jumped:
+func update_jump_buffer(delta):
+	# Track buffered jump input
+	if Input.is_action_just_pressed("ui_accept"):
+		jump_buffer_timer = jump_buffer_time
+	else:
+		jump_buffer_timer = max(jump_buffer_timer - delta, 0)
+		
+func perform_jump():
+	
 		has_jumped = true
+		
 		Events.player_jumped.emit(self)
-		print("Jump")
 		
 		var jump_strength := jumpForce
 		# Weaken jump if attacking
@@ -158,27 +128,11 @@ func update_jump_helpers(delta):
 			jump_strength *= attack_jump_multiplier
 		
 		velocity.y = -jump_strength
-		jump_buffer_timer = max(jump_buffer_timer - delta, 0)
-		coyote_timer = max(coyote_timer - delta, 0)
-
-	# Track ground forgiveness
-	if is_on_floor():
-		coyote_timer = coyote_time 
-	else:
-		coyote_timer -= delta
 		
-	var on_floor := is_on_floor()
-	
-	if on_floor and not was_on_floor:
-		has_jumped = false
+		jump_buffer_timer = 0
+		coyote_timer = -1
 		
-	was_on_floor = on_floor
-		
-	# Track buffered jump input
-	if Input.is_action_just_pressed("ui_accept"):
-		jump_buffer_timer = jump_buffer_time
-	else:
-		jump_buffer_timer -= delta
+		state_machine.change_state("JumpState")
 		
 func _on_coin_collected(player):
 	GameMan.coins += 1

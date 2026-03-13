@@ -16,6 +16,7 @@ func _ready():
 	Events.entity_died.connect(_on_entity_died)
 	Events.coin_collected.connect(_on_coin_collected)
 	Events.player_fell.connect(_on_player_fell)
+	Events.wall_switch_activated.connect(_on_wall_switch_activated)
 
 func play_music(stream: AudioStream):
 	music_player.stream = stream
@@ -87,3 +88,6 @@ func _on_coin_collected(player):
 	
 func _on_game_reset():
 	music_player.play()
+	
+func _on_wall_switch_activated(player):
+	play_sfx("switch", player.global_position)

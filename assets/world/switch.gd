@@ -20,4 +20,4 @@ func activate_switch():
 		return
 	activated = true
 	print("Button pressed!")
-	Events.wall_switch_activated.emit()
+	Events.wall_switch_activated.emit(self)

@@ -1,4 +1,5 @@
 extends "res://scenes_n_scripts/State Machines/Player States/PlayerState.gd"
+class_name AttackState
 
 func enter():
 	pass	
