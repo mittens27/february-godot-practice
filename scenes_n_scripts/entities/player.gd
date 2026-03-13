@@ -1,9 +1,6 @@
 extends CharacterBody2D
 
-enum PlayerState { IDLE, RUN, JUMP, FALL, ATTACK }
-
-var state : PlayerState = PlayerState.IDLE
-
+@onready var state_machine := $StateMachine
 @onready var sprite := $AnimatedSprite2D
 @onready var health_component = $HealthComponent
 @onready var attack_hitbox := $Attack/Hitbox
@@ -16,7 +13,7 @@ var maxSpeed := 200.0
 var acceleration := 1200.0
 var friction := 1500.0
 var gravity := 900.0
-var jumpForce := 275.0
+var jumpForce := 300.0
 
 var invulnerability_time := 0.5
 var is_invulnerable = false
@@ -30,6 +27,8 @@ var coyote_timer := 0.0
 
 var jump_buffer_time := 0.12
 var jump_buffer_timer := 0.0
+var was_on_floor := false
+var has_jumped := false
 
 var combo_step := 0
 var combo_queued := false
@@ -40,6 +39,7 @@ var attack_lunge_speed := maxSpeed * 0.65
 var attack_jump_multiplier := 0.5
 
 func _ready():
+	state_machine.start()
 	apply_player_data()
 	
 	#Events.player_fell.connect(_on_player_fell)
@@ -53,6 +53,7 @@ func _ready():
 	attack_hitbox.monitorable = false
 
 func _physics_process(delta):
+	state_machine.physics_update(delta)
 	# Makes sprite opacity flicker when hurt
 	if is_invulnerable:
 		flicker_time += delta
@@ -69,22 +70,12 @@ func _physics_process(delta):
 	update_jump_helpers(delta)
 	
 	if Input.is_action_just_pressed("attack"):
-		if state != PlayerState.ATTACK:
+		if state_machine.current_state.name != "AttackState":
 			start_attack()
 		else:
 			combo_queued = true
 	
-	match state:
-		PlayerState.IDLE:
-			state_idle(delta)
-		PlayerState.RUN:
-			state_run(delta)
-		PlayerState.JUMP:
-			state_jump(delta)
-		PlayerState.FALL:
-			state_fall(delta)
-		PlayerState.ATTACK:
-			state_attack(delta)
+	state_machine.physics_update(delta)
 
 	if velocity.x != 0:
 		sprite.flip_h = velocity.x < 0
@@ -93,51 +84,51 @@ func _physics_process(delta):
 	apply_gravity(delta)
 	move_and_slide()
 
-func state_idle(delta):
-	apply_horizontal_movement(delta)
-	sprite.play("idle")
+#func state_idle(delta):
+	#apply_horizontal_movement(delta)
+	#sprite.play("idle")
+	#
+	#if not is_on_floor() and velocity.y < 0:
+		#state = PlayerState.JUMP
+	#elif not is_on_floor() and velocity.y > 0:
+		#state = PlayerState.FALL
+	#elif abs(velocity.x) > 10:
+		#state = PlayerState.RUN
 	
-	if not is_on_floor() and velocity.y < 0:
-		state = PlayerState.JUMP
-	elif not is_on_floor() and velocity.y > 0:
-		state = PlayerState.FALL
-	elif abs(velocity.x) > 10:
-		state = PlayerState.RUN
+#func state_run(delta):
+	#apply_horizontal_movement(delta)
+	#apply_gravity(delta)
+	#sprite.play("run")
+	#
+	#if not is_on_floor() and velocity.y < 0:
+		#state = PlayerState.JUMP
+	#elif not is_on_floor() and velocity.y > 0:
+		#state = PlayerState.FALL
+	#elif abs(velocity.x) <= 10:
+		#state = PlayerState.IDLE
 	
-func state_run(delta):
-	apply_horizontal_movement(delta)
-	apply_gravity(delta)
-	sprite.play("run")
+#func state_jump(delta):
+	#apply_horizontal_movement(delta)
+	#sprite.play("jump")
+	#
+	#if velocity.y > 0:
+		#state = PlayerState.FALL
 	
-	if not is_on_floor() and velocity.y < 0:
-		state = PlayerState.JUMP
-	elif not is_on_floor() and velocity.y > 0:
-		state = PlayerState.FALL
-	elif abs(velocity.x) <= 10:
-		state = PlayerState.IDLE
-	
-func state_jump(delta):
-	apply_horizontal_movement(delta)
-	sprite.play("jump")
-	
-	if velocity.y > 0:
-		state = PlayerState.FALL
-	
-func state_fall(delta):
-	apply_horizontal_movement(delta)
-	sprite.play("fall")
-	
-	if is_on_floor():
-		state = PlayerState.IDLE
+#func state_fall(delta):
+	#apply_horizontal_movement(delta)
+	#sprite.play("fall")
+	#
+	#if is_on_floor():
+		#state = PlayerState.IDLE
 		
-func state_attack(delta):
-	# Apply forward impulse once at attack start
-	if is_on_floor():
-		if not attack_impulse_applied:
-			var dir = -1 if sprite.flip_h else 1
-			velocity.x = dir * attack_lunge_speed
-			attack_impulse_applied = true
-		velocity.x = move_toward(velocity.x, 0, 300 * delta)
+#func state_attack(delta):
+	## Apply forward impulse once at attack start
+	#if is_on_floor():
+		#if not attack_impulse_applied:
+			#var dir = -1 if sprite.flip_h else 1
+			#velocity.x = dir * attack_lunge_speed
+			#attack_impulse_applied = true
+		#velocity.x = move_toward(velocity.x, 0, 300 * delta)
 
 func apply_horizontal_movement(delta):
 	# Horizontal Input
@@ -156,10 +147,14 @@ func apply_gravity(delta):
 
 func update_jump_helpers(delta):
 	# Jump only if not standing on something
-	if  jump_buffer_timer > 0 and coyote_timer > 0:
+	if  jump_buffer_timer > 0 and coyote_timer > 0 and not has_jumped:
+		has_jumped = true
+		Events.player_jumped.emit(self)
+		print("Jump")
+		
 		var jump_strength := jumpForce
 		# Weaken jump if attacking
-		if state == PlayerState.ATTACK:
+		if state_machine.current_state.name == "AttackState":
 			jump_strength *= attack_jump_multiplier
 		
 		velocity.y = -jump_strength
@@ -168,14 +163,20 @@ func update_jump_helpers(delta):
 
 	# Track ground forgiveness
 	if is_on_floor():
-		coyote_timer = coyote_time
+		coyote_timer = coyote_time 
 	else:
 		coyote_timer -= delta
+		
+	var on_floor := is_on_floor()
+	
+	if on_floor and not was_on_floor:
+		has_jumped = false
+		
+	was_on_floor = on_floor
 		
 	# Track buffered jump input
 	if Input.is_action_just_pressed("ui_accept"):
 		jump_buffer_timer = jump_buffer_time
-		Events.player_jumped.emit(self)
 	else:
 		jump_buffer_timer -= delta
 		
@@ -220,7 +221,7 @@ func _on_stompbox_body_entered(body):
 		body._on_died()
 
 func _on_animated_sprite_2d_animation_finished():
-	if state == PlayerState.ATTACK:
+	if state_machine.current_state.name == "AttackState":
 		if combo_queued and combo_step < MAX_COMBO:
 			combo_queued = false
 			start_attack()
@@ -228,7 +229,8 @@ func _on_animated_sprite_2d_animation_finished():
 			end_combo()
 			
 func start_attack():
-	state = PlayerState.ATTACK
+	state_machine.change_state("AttackState")
+	
 	attack_impulse_applied = false
 	combo_step += 1
 	combo_step = clamp(combo_step, 1, MAX_COMBO)
@@ -243,14 +245,14 @@ func end_combo():
 	combo_queued = false
 	attack_hitbox.monitorable = false
 	attack_hitbox.monitoring = false
-	state = PlayerState.IDLE
+	state_machine.change_state("IdleState")
 	
 func _on_frame_changed():
 	#defaults to OFF first
 	attack_hitbox.monitorable = false
 	attack_hitbox.monitoring = false
 	
-	if state != PlayerState.ATTACK:
+	if state_machine.current_state.name != "AttackState":
 		return
 	
 	match sprite.animation:

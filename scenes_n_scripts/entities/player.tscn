@@ -3,6 +3,12 @@
 [ext_resource type="Script" uid="uid://bvakbtwrxgfew" path="res://scenes_n_scripts/entities/player.gd" id="1_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://cqcxmdj1qro0c" path="res://assets/ron.png" id="2_hqtel"]
 [ext_resource type="Resource" uid="uid://jinub24o52vu" path="res://scenes_n_scripts/Resources/PlayerData.tres" id="2_lp15m"]
+[ext_resource type="Script" uid="uid://bq6kav76nx0e2" path="res://scenes_n_scripts/State Machines/Player States/IdleState.gd" id="3_11uib"]
+[ext_resource type="Script" uid="uid://c181041dwpl84" path="res://scenes_n_scripts/State Machines/Player States/StateMachine.gd" id="3_ow0ho"]
+[ext_resource type="Script" uid="uid://bqvj8vmi5atd8" path="res://scenes_n_scripts/State Machines/Player States/RunState.gd" id="4_ow0ho"]
+[ext_resource type="Script" uid="uid://cb7ikk6a8j8n5" path="res://scenes_n_scripts/State Machines/Player States/JumpState.gd" id="5_olltm"]
+[ext_resource type="Script" uid="uid://dlq7op724jh3n" path="res://scenes_n_scripts/State Machines/Player States/FallState.gd" id="6_bou3q"]
+[ext_resource type="Script" uid="uid://exjgxbymi5wd" path="res://scenes_n_scripts/State Machines/Player States/AttackState.gd" id="7_rbwyq"]
 [ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="9_5f1cp"]
 [ext_resource type="PackedScene" uid="uid://dq86ykcr7ek46" path="res://scenes_n_scripts/components/hurtbox.tscn" id="10_wqm4w"]
 [ext_resource type="PackedScene" uid="uid://dhcx2fnnb3wrn" path="res://scenes_n_scripts/components/hitbox.tscn" id="11_w81pq"]
@@ -183,6 +189,25 @@ collision_layer = 2
 collision_mask = 1281
 script = ExtResource("1_i3pqv")
 player_data = ExtResource("2_lp15m")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1106233273 node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_ow0ho")
+starting_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1807696905]
+script = ExtResource("3_11uib")
+
+[node name="RunState" type="Node" parent="StateMachine" unique_id=1105898782]
+script = ExtResource("4_ow0ho")
+
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=948196779]
+script = ExtResource("5_olltm")
+
+[node name="FallState" type="Node" parent="StateMachine" unique_id=660369466]
+script = ExtResource("6_bou3q")
+
+[node name="AttackState" type="Node" parent="StateMachine" unique_id=1855449716]
+script = ExtResource("7_rbwyq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2096849689]
 position = Vector2(0.24999253, 2.8499866)
