@@ -13,9 +13,9 @@ var maxSpeed := 200.0
 var acceleration := 1200.0
 var friction := 1500.0
 
-var gravity := 500.0
-var jumpForce := 200.0
-var fall_gravity_multiplier := 1.6
+var gravity := 600.0
+var jumpForce := 350.0
+var fall_gravity_multiplier := 1.2   
 var jump_cut_gravity_multiplier := 2.5
 
 var invulnerability_time := 0.5
@@ -30,7 +30,6 @@ var coyote_timer := 0.0
 
 var jump_buffer_time := 0.12
 var jump_buffer_timer := 0.0
-var was_on_floor := false
 var has_jumped := false
 
 var combo_step := 0
@@ -56,7 +55,6 @@ func _ready():
 	attack_hitbox.monitorable = false
 
 func _physics_process(delta):
-	state_machine.physics_update(delta)
 	# Makes sprite opacity flicker when hurt
 	if is_invulnerable:
 		flicker_time += delta
@@ -71,17 +69,20 @@ func _physics_process(delta):
 		facing_direction = -1
 	
 	if Input.is_action_just_pressed("attack"):
-		if not state_machine.current_state is AttackState:
-			start_attack()
-		else:
+		if state_machine.current_state is AirAttackState or state_machine.current_state is GroundedAttackState:
 			combo_queued = true
+		else:
+			start_attack()
 	
 	state_machine.physics_update(delta)
 
 	if velocity.x != 0:
 		sprite.flip_h = velocity.x < 0
 		attack.scale.x = -1 if sprite.flip_h else 1
-
+		
+	#floor_snap_length = 6
+	update_jump_buffer(delta)
+	state_machine.physics_update(delta)
 	move_and_slide()
 
 func apply_horizontal_movement(delta):
@@ -124,7 +125,7 @@ func perform_jump():
 		
 		var jump_strength := jumpForce
 		# Weaken jump if attacking
-		if state_machine.current_state.name == "AttackState":
+		if (state_machine.current_state is GroundedAttackState or state_machine.current_state is AirAttackState):
 			jump_strength *= attack_jump_multiplier
 		
 		velocity.y = -jump_strength
@@ -166,7 +167,7 @@ func _on_died():
 	queue_free()
 
 func bounce():
-	velocity.y = -250
+	velocity.y = -280
 	Events.player_slammed.emit(self)
 
 func _on_stompbox_body_entered(body):
@@ -175,7 +176,7 @@ func _on_stompbox_body_entered(body):
 		body._on_died()
 
 func _on_animated_sprite_2d_animation_finished():
-	if state_machine.current_state.name == "AttackState":
+	if combo_step > 0:
 		if combo_queued and combo_step < MAX_COMBO:
 			combo_queued = false
 			start_attack()
@@ -183,11 +184,15 @@ func _on_animated_sprite_2d_animation_finished():
 			end_combo()
 			
 func start_attack():
-	state_machine.change_state("AttackState")
+	if is_on_floor():
+		state_machine.change_state("GroundedAttackState")
+	else:
+		state_machine.change_state("AirAttackState")
 	
-	attack_impulse_applied = false
 	combo_step += 1
 	combo_step = clamp(combo_step, 1, MAX_COMBO)
+	
+	attack_impulse_applied = false
 	
 	match combo_step:
 		1: sprite.play("attack_one")
@@ -197,16 +202,21 @@ func start_attack():
 func end_combo():
 	combo_step = 0
 	combo_queued = false
+	
 	attack_hitbox.monitorable = false
 	attack_hitbox.monitoring = false
-	state_machine.change_state("IdleState")
+	
+	if is_on_floor():
+		state_machine.change_state("IdleState")
+	else:
+		state_machine.change_state("FallState")
 	
 func _on_frame_changed():
 	#defaults to OFF first
 	attack_hitbox.monitorable = false
 	attack_hitbox.monitoring = false
 	
-	if state_machine.current_state.name != "AttackState":
+	if not (state_machine.current_state is GroundedAttackState or state_machine.current_state is AirAttackState):
 		return
 	
 	match sprite.animation:

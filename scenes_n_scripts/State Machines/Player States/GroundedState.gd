@@ -7,10 +7,9 @@ func physics_update(delta):
 		player.has_jumped = false
 		
 	player.apply_horizontal_movement(delta)
-	player.update_jump_buffer(delta)
 	
 	if  player.jump_buffer_timer > 0 and not player.has_jumped:
-		if player.is_on_floor() and player.coyote_timer > 0:
+		if player.is_on_floor() or player.coyote_timer > 0:
 			player.perform_jump()
 	
 	if not player.is_on_floor():

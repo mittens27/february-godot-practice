@@ -8,8 +8,9 @@
 [ext_resource type="Script" uid="uid://bqvj8vmi5atd8" path="res://scenes_n_scripts/State Machines/Player States/RunState.gd" id="4_ow0ho"]
 [ext_resource type="Script" uid="uid://cb7ikk6a8j8n5" path="res://scenes_n_scripts/State Machines/Player States/JumpState.gd" id="5_olltm"]
 [ext_resource type="Script" uid="uid://dlq7op724jh3n" path="res://scenes_n_scripts/State Machines/Player States/FallState.gd" id="6_bou3q"]
-[ext_resource type="Script" uid="uid://exjgxbymi5wd" path="res://scenes_n_scripts/State Machines/Player States/AttackState.gd" id="7_rbwyq"]
+[ext_resource type="Script" uid="uid://exjgxbymi5wd" path="res://scenes_n_scripts/State Machines/Player States/GroundedAttackState.gd" id="7_rbwyq"]
 [ext_resource type="PackedScene" uid="uid://dptxdnlr5qh6i" path="res://scenes_n_scripts/components/health_component.tscn" id="9_5f1cp"]
+[ext_resource type="Script" uid="uid://37aggjvogaqg" path="res://scenes_n_scripts/entities/AirAttackState.gd" id="9_olltm"]
 [ext_resource type="PackedScene" uid="uid://dq86ykcr7ek46" path="res://scenes_n_scripts/components/hurtbox.tscn" id="10_wqm4w"]
 [ext_resource type="PackedScene" uid="uid://dhcx2fnnb3wrn" path="res://scenes_n_scripts/components/hitbox.tscn" id="11_w81pq"]
 [ext_resource type="Resource" uid="uid://fqjc087y3lvd" path="res://scenes_n_scripts/Resources/PunchData.tres" id="13_gbcwf"]
@@ -206,8 +207,11 @@ script = ExtResource("5_olltm")
 [node name="FallState" type="Node" parent="StateMachine" unique_id=660369466]
 script = ExtResource("6_bou3q")
 
-[node name="AttackState" type="Node" parent="StateMachine" unique_id=1855449716]
+[node name="GroundedAttackState" type="Node" parent="StateMachine" unique_id=1855449716]
 script = ExtResource("7_rbwyq")
+
+[node name="AirAttackState" type="Node" parent="StateMachine" unique_id=1607978617]
+script = ExtResource("9_olltm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2096849689]
 position = Vector2(0.24999253, 2.8499866)

@@ -8,7 +8,7 @@ func physics_update(delta):
 	
 	player.coyote_timer = max(player.coyote_timer - delta, 0)
 	
-	if player.is_on_floor:
+	if player.is_on_floor():
 		if abs(player.velocity.x) > 10:
 			state_machine.change_state("RunState")
 		else:
